@@ -1,0 +1,17 @@
+{
+  "name": "doegamdok90-demo-video",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "render": "remotion render src/index.jsx Doegamdok90Demo ../output/video/doegamdok90-demo.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p --overwrite",
+    "render:thumbnail": "remotion still src/index.jsx Doegamdok90Thumbnail ../output/video/doegamdok90-thumbnail.png --frame=90 --overwrite"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "^4.0.0"
+  }
+}

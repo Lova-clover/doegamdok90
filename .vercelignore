@@ -1,0 +1,10 @@
+docs/
+video/
+output/
+scripts/
+data/
+app/audit/
+app/test/
+*.pptx
+*.md
+!README.md

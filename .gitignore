@@ -1,0 +1,36 @@
+# Dependencies and build output
+node_modules/
+dist/
+.npm-cache/
+.cache/
+.vercel/
+
+# Local and temporary files
+tmp/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Generated review captures and references
+app/audit/**/*.png
+app/audit/**/*.log
+app/references/
+doegamdok90-final-review/
+doegamdok90-submit-check2/
+새 Microsoft PowerPoint 프레젠테이션/
+
+# Editable and intermediate presentation files
+*.pptx
+doegamdok90-final-review-montage.png
+
+# Generated artifacts: keep only the final planning PDF in Git
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/되감독90_기획서_제출본.pdf
+
+# Rendered video is delivered to YouTube, source stays in video/
+output/video/

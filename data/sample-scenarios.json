@@ -1,0 +1,310 @@
+[
+  {
+    "id": "kor-por-2022-minute-67",
+    "title": "승리가 필요한 67분",
+    "shortTitle": "Need A Winner",
+    "publicHook": "내가 감독이었다면, 그 마지막 역습은 더 빨리 만들 수 있었을까?",
+    "sourceInspiredBy": {
+      "competition": "FIFA World Cup 2022",
+      "match": "South Korea vs Portugal",
+      "sourceType": "public match result context",
+      "note": "Use text references only. No official logos, photos, or broadcast clips."
+    },
+    "moment": {
+      "minute": 67,
+      "score": [1, 1],
+      "userTeamId": "team-kor",
+      "opponentTeamId": "team-por",
+      "timeWindow": "67-90+"
+    },
+    "mission": {
+      "primary": "승리가 필요하다",
+      "description": "15분 안에 결승골 루트를 만들되 중앙 역습 위험을 통제하라.",
+      "successMetric": "goalThreat >= 72 && risk <= 62",
+      "failMetric": "goalThreat < 55 || risk > 78"
+    },
+    "constraints": [
+      "무승부로는 만족스럽지 않다.",
+      "중앙 역습 채널을 비우면 위험하다.",
+      "후반 체력 저하 때문에 고강도 압박은 비용이 크다."
+    ],
+    "realBaseline": {
+      "summary": "실제 경기는 후반 막판 역습 루트가 결정적이었다.",
+      "baselineScore": 62,
+      "finalOutcome": "late winner",
+      "keyEvents": [
+        { "minute": "27", "type": "goal", "team": "South Korea" },
+        { "minute": "90+1", "type": "goal", "team": "South Korea" }
+      ]
+    },
+    "opponentModel": {
+      "dangerZones": ["central_counter", "left_half_space"],
+      "weakZones": ["opponent_right_flank", "late_far_post"],
+      "pressResistance": 68,
+      "counterThreat": 78,
+      "boxProtection": 70
+    },
+    "defaultTactic": {
+      "formation": "4-2-3-1",
+      "instructions": {
+        "pressingLine": "mid",
+        "tempo": "balanced",
+        "width": "balanced",
+        "risk": "balanced",
+        "attackFocus": "mixed",
+        "buildup": "mixed"
+      }
+    },
+    "coachOptions": {
+      "safe": {
+        "label": "무너지지 않는 추격",
+        "formation": "4-2-3-1",
+        "instructions": { "pressingLine": "mid", "tempo": "balanced", "width": "wide", "risk": "balanced", "attackFocus": "right", "buildup": "mixed" },
+        "advice": "더블 피벗을 남기고 오른쪽 약점을 반복 공략하세요."
+      },
+      "balanced": {
+        "label": "측면 과부하",
+        "formation": "4-3-3",
+        "instructions": { "pressingLine": "mid", "tempo": "fast", "width": "wide", "risk": "balanced", "attackFocus": "right", "buildup": "direct" },
+        "advice": "fresh runner를 측면에 넣고 DM 한 명은 중앙에 남기세요."
+      },
+      "gamble": {
+        "label": "운명을 건 3-4-3",
+        "formation": "3-4-3",
+        "instructions": { "pressingLine": "high", "tempo": "fast", "width": "wide", "risk": "allIn", "attackFocus": "right", "buildup": "direct" },
+        "advice": "찬스는 커지지만 중앙 역습 위험이 크게 올라갑니다."
+      }
+    },
+    "simulationEventPool": [
+      "70' 오른쪽 측면에서 2대1 상황이 만들어졌습니다.",
+      "74' 교체 투입한 러너가 뒷공간을 열었습니다.",
+      "79' 중앙 역습 위험이 올라갔지만 수비형 미드필더가 이를 완화했습니다.",
+      "82' 컷백 찬스가 생성됐습니다.",
+      "86' 높은 라인 뒤 공간이 노출되어 실점 위험이 커졌습니다."
+    ],
+    "personaBias": ["Counter Punch Manager", "Chaos Chaser", "Balance Guardian"]
+  },
+  {
+    "id": "arg-fra-2022-minute-78",
+    "title": "78분, 리드를 지켜라",
+    "shortTitle": "Protect The Lead",
+    "publicHook": "무너질 뻔한 결승전 흐름을 감독의 한 수로 잠글 수 있을까?",
+    "sourceInspiredBy": {
+      "competition": "FIFA World Cup 2022",
+      "match": "Argentina vs France",
+      "sourceType": "public match result context",
+      "note": "Use text references only. No official logos, photos, or broadcast clips."
+    },
+    "moment": {
+      "minute": 78,
+      "score": [2, 0],
+      "userTeamId": "team-arg",
+      "opponentTeamId": "team-fra",
+      "timeWindow": "78-90"
+    },
+    "mission": {
+      "primary": "리드를 지켜라",
+      "description": "상대의 마지막 압박과 박스 진입을 줄이면서 역습 출구 하나는 유지하라.",
+      "successMetric": "restDefense >= 76 && momentum >= 58 && risk <= 50",
+      "failMetric": "risk > 70 || restDefense < 52"
+    },
+    "constraints": [
+      "너무 내려앉으면 세트피스와 박스 진입이 늘어난다.",
+      "공격 출구를 모두 지우면 압박을 계속 맞는다.",
+      "체력이 떨어진 선수에게 높은 압박을 요구하면 위험하다."
+    ],
+    "realBaseline": {
+      "summary": "실제 경기는 후반 막판 상대가 빠르게 흐름을 되찾았다.",
+      "baselineScore": 54,
+      "finalOutcome": "late equalizing momentum",
+      "keyEvents": [
+        { "minute": "80", "type": "goal", "team": "France" },
+        { "minute": "81", "type": "goal", "team": "France" }
+      ]
+    },
+    "opponentModel": {
+      "dangerZones": ["penalty_spot", "left_half_space", "right_wing_isolation"],
+      "weakZones": ["space_behind_left_back"],
+      "pressResistance": 82,
+      "counterThreat": 64,
+      "boxProtection": 74
+    },
+    "defaultTactic": {
+      "formation": "4-3-3",
+      "instructions": {
+        "pressingLine": "mid",
+        "tempo": "balanced",
+        "width": "balanced",
+        "risk": "balanced",
+        "attackFocus": "mixed",
+        "buildup": "short"
+      }
+    },
+    "coachOptions": {
+      "safe": {
+        "label": "박스 보호",
+        "formation": "5-4-1",
+        "instructions": { "pressingLine": "low", "tempo": "patient", "width": "narrow", "risk": "protect", "attackFocus": "mixed", "buildup": "direct" },
+        "advice": "박스 안 숫자를 늘리되 역습 출구 하나를 남기세요."
+      },
+      "balanced": {
+        "label": "미드블록 관리",
+        "formation": "4-4-2",
+        "instructions": { "pressingLine": "mid", "tempo": "patient", "width": "balanced", "risk": "protect", "attackFocus": "left", "buildup": "mixed" },
+        "advice": "라인을 완전히 내리지 말고 세컨드볼을 관리하세요."
+      },
+      "gamble": {
+        "label": "세 번째 골 추격",
+        "formation": "4-3-3",
+        "instructions": { "pressingLine": "high", "tempo": "fast", "width": "wide", "risk": "balanced", "attackFocus": "mixed", "buildup": "short" },
+        "advice": "상대 흐름을 끊을 수 있지만 체력 리스크가 큽니다."
+      }
+    },
+    "simulationEventPool": [
+      "80' 박스 중앙 진입 횟수가 줄었습니다.",
+      "83' 세컨드볼 회수로 상대 흐름을 끊었습니다.",
+      "86' 역습 출구가 남아 압박을 밀어냈습니다.",
+      "88' 너무 낮은 라인으로 세트피스 위험이 증가했습니다.",
+      "89' 지친 미드필더가 압박 타이밍을 놓쳤습니다."
+    ],
+    "personaBias": ["Balance Guardian", "Pressing Romantic", "Counter Punch Manager"]
+  },
+  {
+    "id": "low-block-2022-minute-58",
+    "title": "58분, 잠긴 수비를 열어라",
+    "shortTitle": "Break The Low Block",
+    "publicHook": "공격수를 더 넣는 것보다 구조를 바꾸는 감독이 이길 수 있을까?",
+    "sourceInspiredBy": {
+      "competition": "FIFA World Cup knockout pattern",
+      "match": "compact low-block scenario",
+      "sourceType": "curated tactical scenario",
+      "note": "Designed from common World Cup knockout patterns."
+    },
+    "moment": {
+      "minute": 58,
+      "score": [0, 0],
+      "userTeamId": "team-possession",
+      "opponentTeamId": "team-low-block",
+      "timeWindow": "58-80"
+    },
+    "mission": {
+      "primary": "잠긴 수비를 열어라",
+      "description": "밀집 수비를 상대로 찬스 품질을 높이되 넓은 역습을 대비하라.",
+      "successMetric": "goalThreat >= 68 && control >= 70 && restDefense >= 58",
+      "failMetric": "goalThreat < 50 || control < 52"
+    },
+    "constraints": [
+      "중앙에 공격수를 쌓으면 오히려 혼잡해진다.",
+      "양쪽 풀백을 동시에 올리면 측면 역습에 취약하다.",
+      "직선적인 크로스는 제공권이 약하면 효과가 낮다."
+    ],
+    "realBaseline": {
+      "summary": "많은 월드컵 토너먼트 경기에서 강팀은 내려앉은 수비를 상대로 찬스 품질을 만드는 데 어려움을 겪었다.",
+      "baselineScore": 58,
+      "finalOutcome": "low chance quality",
+      "keyEvents": [
+        { "minute": "58", "type": "state", "team": "Both", "label": "compact block" }
+      ]
+    },
+    "opponentModel": {
+      "dangerZones": ["wide_counter_left", "wide_counter_right"],
+      "weakZones": ["right_half_space", "late_box_run", "far_post"],
+      "pressResistance": 48,
+      "counterThreat": 66,
+      "boxProtection": 84
+    },
+    "defaultTactic": {
+      "formation": "4-3-3",
+      "instructions": {
+        "pressingLine": "mid",
+        "tempo": "patient",
+        "width": "balanced",
+        "risk": "balanced",
+        "attackFocus": "center",
+        "buildup": "short"
+      }
+    },
+    "coachOptions": {
+      "safe": {
+        "label": "하프스페이스 설계",
+        "formation": "4-3-3",
+        "instructions": { "pressingLine": "mid", "tempo": "patient", "width": "wide", "risk": "balanced", "attackFocus": "right", "buildup": "short" },
+        "advice": "폭을 넓히고 한 명은 하프스페이스에 세우세요."
+      },
+      "balanced": {
+        "label": "3-2-5 점유 구조",
+        "formation": "3-5-2",
+        "instructions": { "pressingLine": "mid", "tempo": "balanced", "width": "wide", "risk": "balanced", "attackFocus": "right", "buildup": "short" },
+        "advice": "공격 시 5명을 전방에 두되 2명의 rest defense를 남기세요."
+      },
+      "gamble": {
+        "label": "박스 점령",
+        "formation": "3-4-3",
+        "instructions": { "pressingLine": "high", "tempo": "fast", "width": "wide", "risk": "allIn", "attackFocus": "mixed", "buildup": "direct" },
+        "advice": "박스 숫자는 늘지만 측면 역습 대비가 약해집니다."
+      }
+    },
+    "simulationEventPool": [
+      "64' 하프스페이스 점유로 수비 라인이 흔들렸습니다.",
+      "70' 컷백 통로가 열렸습니다.",
+      "74' 박스 안 숫자는 늘었지만 역습 대비가 약합니다.",
+      "77' 멀리 있는 포스트로 늦은 침투가 들어갔습니다.",
+      "79' 중앙 밀집에 갇혀 슈팅 각도가 사라졌습니다."
+    ],
+    "personaBias": ["Half-Space Engineer", "Set-Piece Architect", "Chaos Chaser"]
+  },
+  {
+    "id": "set-piece-minute-89",
+    "title": "89분, 마지막 세트피스",
+    "shortTitle": "Last Set Piece",
+    "publicHook": "마지막 코너킥 하나로 감독의 이름을 남길 수 있을까?",
+    "mvpStatus": "bonus",
+    "sourceInspiredBy": {
+      "competition": "World Cup knockout late-game pattern",
+      "match": "late set-piece scenario",
+      "sourceType": "curated tactical scenario",
+      "note": "Bonus mode only after main three scenarios are stable."
+    },
+    "moment": {
+      "minute": 89,
+      "score": [0, 1],
+      "userTeamId": "team-chasing",
+      "opponentTeamId": "team-protecting",
+      "timeWindow": "89-90+"
+    },
+    "mission": {
+      "primary": "마지막 한 방을 설계하라",
+      "description": "세트피스 러너를 배치해 헤더/세컨드볼 찬스를 만들고 역습을 대비하라.",
+      "successMetric": "goalThreat >= 70 && restDefense >= 45",
+      "failMetric": "goalThreat < 45 || risk > 82"
+    },
+    "constraints": [
+      "공격수를 모두 박스에 넣으면 역습에 취약하다.",
+      "러너가 같은 공간으로 뛰면 수비가 쉽게 막는다.",
+      "세컨드볼 위치가 없으면 한 번 막힌 뒤 끝난다."
+    ],
+    "realBaseline": {
+      "summary": "후반 막판 세트피스는 월드컵 토너먼트에서 가장 극적인 감독 개입 지점 중 하나다.",
+      "baselineScore": 55,
+      "finalOutcome": "last chance",
+      "keyEvents": [
+        { "minute": "89", "type": "set_piece", "team": "User" }
+      ]
+    },
+    "opponentModel": {
+      "dangerZones": ["central_counter"],
+      "weakZones": ["near_post_screen", "far_post_late_run"],
+      "pressResistance": 50,
+      "counterThreat": 70,
+      "boxProtection": 80
+    },
+    "setPieceControls": ["near_post", "far_post", "screen", "rebound", "short_option", "rest_defense"],
+    "simulationEventPool": [
+      "90' 니어포스트 스크린이 수비수를 묶었습니다.",
+      "90+1' 파포스트 러너가 헤더 공간을 얻었습니다.",
+      "90+2' 세컨드볼 위치가 좋아 재공격이 이어졌습니다.",
+      "90+3' rest defense가 없어 역습 위험이 커졌습니다."
+    ],
+    "personaBias": ["Set-Piece Architect", "Chaos Chaser", "Balance Guardian"]
+  }
+]

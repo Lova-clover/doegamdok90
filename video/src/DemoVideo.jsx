@@ -1,0 +1,345 @@
+import React from "react";
+import {
+  AbsoluteFill,
+  Audio,
+  Easing,
+  Img,
+  Sequence,
+  interpolate,
+  spring,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+
+const LIME = "#91e52f";
+const WHITE = "#f6f8f2";
+const MUTED = "#b8c1b2";
+
+const sceneMeta = [
+  { start: 0, end: 210, label: "되감기" },
+  { start: 210, end: 540, label: "경기 선택" },
+  { start: 540, end: 1020, label: "전술 개입" },
+  { start: 1020, end: 1380, label: "인과 확인" },
+  { start: 1380, end: 1860, label: "리플레이" },
+  { start: 1860, end: 2340, label: "감독 리포트" },
+  { start: 2340, end: 2640, label: "도전" },
+];
+
+const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
+
+const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28 }) => {
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const scale = interpolate(frame, [0, durationInFrames], [zoom, zoom + 0.045], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
+
+  return (
+    <AbsoluteFill>
+      <Img
+        src={staticFile(src)}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: position,
+          transform: `scale(${scale})`,
+        }}
+      />
+      <AbsoluteFill style={{ background: `rgba(4, 8, 8, ${shade})` }} />
+      <AbsoluteFill className="screen-vignette" />
+    </AbsoluteFill>
+  );
+};
+
+const Kicker = ({ children }) => <div className="kicker">{children}</div>;
+
+const Caption = ({ kicker, title, body, align = "left", accent = [] }) => {
+  const frame = useCurrentFrame();
+  const y = interpolate(frame, [0, 24], [50, 0], {
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
+  const opacity = interpolate(frame, [0, 18], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+  const highlighted = title.split(/(되감독90|내 판단|직접|즉시|GOAL|결과)/g);
+
+  return (
+    <div
+      className={`caption caption-${align}`}
+      style={{ opacity, transform: `translateY(${y}px)` }}
+    >
+      <Kicker>{kicker}</Kicker>
+      <h1>
+        {highlighted.map((part, index) => (
+          <span
+            key={`${part}-${index}`}
+            style={{ color: accent.includes(part) ? LIME : undefined }}
+          >
+            {part}
+          </span>
+        ))}
+      </h1>
+      {body ? <p>{body}</p> : null}
+    </div>
+  );
+};
+
+const Brand = ({ compact = false }) => (
+  <div className={`brand ${compact ? "brand-compact" : ""}`}>
+    <span>되감독</span>
+    <strong>90</strong>
+  </div>
+);
+
+const Progress = () => {
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const width = `${(frame / (durationInFrames - 1)) * 100}%`;
+  const active = sceneMeta.findIndex(({ start, end }) => frame >= start && frame < end);
+
+  return (
+    <div className="progress-wrap">
+      <div className="progress-labels">
+        {sceneMeta.map(({ label }, index) => (
+          <span key={label} className={index === active ? "active" : ""}>
+            {label}
+          </span>
+        ))}
+      </div>
+      <div className="progress-track">
+        <div className="progress-fill" style={{ width }} />
+      </div>
+    </div>
+  );
+};
+
+const Intro = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const scale = spring({ frame, fps, config: { damping: 16, stiffness: 95 } });
+  const line = interpolate(frame, [25, 100], [0, 1], {
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
+
+  return (
+    <AbsoluteFill className="intro">
+      <Screen src="screens/archive.png" position="center 35%" zoom={1.08} shade={0.62} />
+      <div className="intro-grid" />
+      <div className="intro-content" style={{ transform: `scale(${0.88 + scale * 0.12})` }}>
+        <Kicker>WORLD CUP DECISION REPLAY</Kicker>
+        <Brand />
+        <div className="intro-rule" style={{ transform: `scaleX(${line})` }} />
+        <p>그 경기를 되감고, 내가 감독이 된다.</p>
+      </div>
+      <div className="intro-corner">90초 안에 증명하는 감독의 판단</div>
+    </AbsoluteFill>
+  );
+};
+
+const Archive = () => (
+  <AbsoluteFill>
+    <Screen src="screens/archive.png" position="center 32%" shade={0.34} />
+    <Caption
+      kicker="01 / HEARTBREAK ARCHIVE"
+      title="사람들이 아쉬워한 순간으로 돌아갑니다."
+      body="6개의 실제 월드컵 결정 시점. 같은 경기도 서로 다른 감독석에서 다시 판단합니다."
+      accent={["결과"]}
+    />
+    <div className="match-pill">대한민국 vs 가나 · 61분 · 2:2</div>
+  </AbsoluteFill>
+);
+
+const Tactics = () => {
+  const frame = useCurrentFrame();
+  const pulse = 1 + Math.sin(frame / 8) * 0.04;
+  const x = interpolate(frame, [90, 230], [1260, 1050], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
+  const y = interpolate(frame, [90, 230], [660, 470], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
+
+  return (
+    <AbsoluteFill>
+      <Screen src="screens/board.png" position="center" shade={0.18} />
+      <Caption
+        kicker="02 / YOUR CALL"
+        title="선수 한 명의 위치부터 직접 결정합니다."
+        body="드래그 배치, 포메이션, 교체, 템포·폭·압박·위험도를 한 화면에서 조작합니다."
+        accent={["직접"]}
+      />
+      <div className="cursor" style={{ left: x, top: y, transform: `scale(${pulse})` }}>
+        <div className="cursor-ring" />
+        <div className="cursor-hand">✦</div>
+      </div>
+      <div className="metric-row">
+        <span>포메이션 4-2-3-1</span>
+        <span>폭 72</span>
+        <span>압박 68</span>
+        <span>위험도 54</span>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const Cause = () => {
+  const frame = useCurrentFrame();
+  const items = ["내 판단", "공간 +24%", "xG +0.49", "득점 기회 증가"];
+
+  return (
+    <AbsoluteFill>
+      <Screen src="screens/ready.png" position="center" shade={0.4} />
+      <Caption
+        kicker="03 / CAUSE & EFFECT"
+        title="내 판단이 만든 변화를 즉시 설명합니다."
+        body="결과 숫자만 보여주지 않습니다. 무엇을 바꿔 어떤 공간과 대가가 생겼는지 연결합니다."
+        accent={["내 판단", "즉시"]}
+      />
+      <div className="cause-chain">
+        {items.map((item, index) => {
+          const reveal = interpolate(frame, [35 + index * 22, 58 + index * 22], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+          return (
+            <React.Fragment key={item}>
+              <div style={{ opacity: reveal, transform: `translateX(${(1 - reveal) * 30}px)` }}>
+                {item}
+              </div>
+              {index < items.length - 1 ? <b style={{ opacity: reveal }}>→</b> : null}
+            </React.Fragment>
+          );
+        })}
+      </div>
+      <div className="tradeoff">공격 기회 ↑ &nbsp;·&nbsp; 역습 위험도 ↑</div>
+    </AbsoluteFill>
+  );
+};
+
+const Replay = () => {
+  const frame = useCurrentFrame();
+  const goal = interpolate(frame, [270, 300, 355], [0, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const ballX = interpolate(frame, [80, 310], [1040, 1515], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.inOut(Easing.cubic),
+  });
+  const ballY = interpolate(frame, [80, 200, 310], [690, 470, 385], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  return (
+    <AbsoluteFill>
+      <Screen src="screens/live.png" position="center" shade={0.22} />
+      <Caption
+        kicker="04 / LIVE REPLAY"
+        title="공이 골라인을 통과한 순간에만 GOAL."
+        body="선수와 공은 끊기지 않고 움직이고, 현장 지시는 공간·모멘텀·이벤트·스코어를 함께 바꿉니다."
+        accent={["GOAL"]}
+      />
+      <div className="ball-tracer" style={{ left: ballX, top: ballY }} />
+      <div className="goal-flash" style={{ opacity: goal, transform: `scale(${0.7 + goal * 0.3})` }}>
+        GOAL
+        <small>골라인 판정 완료</small>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const Report = () => {
+  const frame = useCurrentFrame();
+  const score = Math.round(interpolate(frame, [40, 150], [0, 92], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  }));
+
+  return (
+    <AbsoluteFill>
+      <Screen src="screens/report.png" position="center" shade={0.25} />
+      <Caption
+        kicker="05 / MANAGER REPORT"
+        title="실제 경기와 내 결과를 한 화면에서 비교합니다."
+        body="기존 전술, 내 선택, 코치 제안을 같은 시점과 목표로 비교해 판단의 이유와 대가를 남깁니다."
+        accent={["내 결과", "결과"]}
+      />
+      <div className="score-orbit">
+        <span>감독 점수</span>
+        <strong>{score}</strong>
+        <small>/ 100</small>
+      </div>
+      <div className="report-proof">실제 2:2 &nbsp;→&nbsp; 내 선택 3:2 &nbsp;·&nbsp; 매치 플랜 3/3</div>
+    </AbsoluteFill>
+  );
+};
+
+const Outro = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const enter = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
+
+  return (
+    <AbsoluteFill className="outro">
+      <Screen src="screens/archive.png" position="center 70%" zoom={1.1} shade={0.72} />
+      <div className="outro-content" style={{ opacity: enter, transform: `translateY(${(1 - enter) * 45}px)` }}>
+        <Kicker>THE RESULT IS NOT A CLICK. IT IS YOUR CALL.</Kicker>
+        <Brand />
+        <h2>결과를 바꾸는 건 클릭이 아니라 판단입니다.</h2>
+        <p>그 경기를 되감고, 내가 감독이 된다.</p>
+        <div className="cta">지금, 감독석에 앉으세요 <span>DG90</span></div>
+        <small>비공식 팬 시뮬레이션 · 자체 모델 수치는 공식 예측이 아닙니다.</small>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const CrowdAudio = () => {
+  const frame = useCurrentFrame();
+  const volume = interpolate(frame, [0, 45, 2300, 2639], [0, 0.14, 0.14, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return <Audio src={staticFile("audio/stadium-crowd.wav")} volume={volume} loop />;
+};
+
+export const DemoVideo = () => (
+  <AbsoluteFill className="video-root">
+    <CrowdAudio />
+    <Sequence from={0} durationInFrames={210}><Intro /></Sequence>
+    <Sequence from={210} durationInFrames={330}><Archive /></Sequence>
+    <Sequence from={540} durationInFrames={480}><Tactics /></Sequence>
+    <Sequence from={1020} durationInFrames={360}><Cause /></Sequence>
+    <Sequence from={1380} durationInFrames={480}><Replay /></Sequence>
+    <Sequence from={1860} durationInFrames={480}><Report /></Sequence>
+    <Sequence from={2340} durationInFrames={300}><Outro /></Sequence>
+    <div className="top-brand"><Brand compact /></div>
+    <Progress />
+  </AbsoluteFill>
+);
+
+export const Thumbnail = () => (
+  <AbsoluteFill className="thumbnail">
+    <Screen src="screens/live.png" position="center" zoom={1.04} shade={0.55} />
+    <div className="thumbnail-content">
+      <Kicker>월드컵 결정적 순간을 다시 지휘하라</Kicker>
+      <Brand />
+      <h2>내 전술로<br /><span>결과가 바뀐다</span></h2>
+      <div className="thumbnail-score">61분 · 2:2 → <strong>3:2</strong></div>
+    </div>
+    <div className="thumbnail-badge">인과형 전술 시뮬레이터</div>
+  </AbsoluteFill>
+);
