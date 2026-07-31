@@ -1,44 +1,81 @@
 # 되감독90 - Rights and Attribution Notice
 
 Last updated: 2026-08-01
+Repository: <https://github.com/Lova-clover/doegamdok90>
 
-## Project status
+## 1. Project status
 
 되감독90 is an unofficial, non-commercial fan simulation created for the DAKER World Cup manager tactics web challenge. It is not affiliated with, endorsed by, or sponsored by FIFA, DAKER, any national football association, team, player, or broadcaster.
 
-## License scope
+This notice explains the boundary between code released under MIT, original project materials that are not released under MIT, public factual information, and third-party works.
 
-The MIT License in [`LICENSE`](LICENSE) applies to the original application source code in `app/src`, its tests, build configuration, and the original Remotion source code in `video/src`.
+## 2. MIT-licensed source code
 
-Unless a file states otherwise, the following are **not** granted under the MIT License:
+The unmodified MIT License in [`LICENSE`](LICENSE) applies to the original source code in:
+
+- `app/src/`
+- `app/test/`
+- `app/index.html`
+- `app/vite.config.mjs`
+- `video/src/`
+- original build and automation configuration unless a file states otherwise
+
+SPDX identifier: `MIT`
+
+The MIT license grant does not imply endorsement by the project owner, the competition organizer, any football organization, or any person represented by factual roster information.
+
+## 3. Materials outside the MIT grant
+
+Unless a file includes a separate license notice, the following are not licensed under MIT:
 
 - the `되감독90` name, wordmark, visual identity, tagline, and challenge code `DG90`;
-- curated match facts, player rosters, ratings, scenario copy, and simulation tuning values;
-- generated stadium, pitch, presentation, and video image assets;
+- curated match narratives, mission design, player ratings, scenario copy, and simulation tuning values;
+- generated stadium, pitch, presentation, thumbnail, and video image assets;
 - synthesized audio renders;
 - planning documents, presentation files, screenshots, and rendered videos;
-- third-party packages and country flags, which remain under their own licenses.
+- third-party packages, icons, and country flags.
 
-These exclusions do not restrict rights that may independently exist in public factual information, nor do they replace the competition-specific license accepted under the DAKER rules.
+All rights in original excluded materials are reserved by their respective rightsholders. Permission given under the DAKER competition rules remains effective according to those rules.
 
-## Match facts and simulation data
+## 4. Factual information and model output
 
 - Dates, scores, scorers, substitutions, and match context are small factual excerpts manually curated from linked official match reports.
-- Official pages are linked for attribution; articles, photographs, footage, logos, event emblems, and broadcast graphics are not copied into this repository.
-- Player ratings, xG, tactical metrics, manager scores, and simulated outcomes are deterministic local model values created for this interactive experience. They are not official statistics, scouting reports, or predictions.
+- Source pages are linked for attribution. Articles, photographs, footage, logos, event emblems, broadcast graphics, and databases are not copied wholesale.
+- No ownership is claimed over public facts themselves. This project may claim rights only in its original selection, arrangement, copy, code, and model design where legally available.
+- Player ratings, xG, tactical metrics, manager scores, and simulated outcomes are deterministic local experience-model values. They are not official statistics, scouting reports, betting advice, or predictions.
 - Player and team descriptions are neutral and are not intended to demean or defame any person, team, or country.
 
-## People, marks, and visual assets
+## 5. People, marks, and media
 
 - No real player photographs, synthetic lookalikes, voices, signatures, team crests, FIFA marks, sponsor marks, or broadcast captures are included.
-- Players are represented by shirt-number markers using national colors. Country flags are supplied by the MIT-licensed `country-flag-icons` package.
-- Stadium and pitch images were generated specifically for this project without logos, text, recognizable players, or sponsor branding.
+- Players are represented by names, shirt numbers, positions, national colors, and generic shirt markers.
+- Country flags are rendered through the MIT-licensed `country-flag-icons` package.
+- Stadium and pitch assets were generated specifically for this project and reviewed to exclude logos, text, recognizable players, and sponsor branding.
 - Crowd audio is synthesized locally from code and contains no external recording or sample.
 
-## Open-source dependencies
+Player names, country names, match names, and scores are used descriptively to identify historical match context. Such descriptive use does not imply affiliation or endorsement.
 
-Direct application dependencies are declared in `app/package-lock.json`; video dependencies are declared in `video/package-lock.json`. Each dependency remains subject to its own license. Detailed provenance is maintained in [`docs/14-assets-and-license.md`](docs/14-assets-and-license.md).
+## 6. Third-party software
 
-## Corrections and takedown
+Dependencies remain subject to their respective licenses. Direct dependencies and notable terms are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md); exact versions and transitive packages are locked in `app/package-lock.json` and `video/package-lock.json`.
 
-For a factual correction, rights concern, or takedown request, open a GitHub issue with the affected file or screen, the basis of the request, and a contact method. Good-faith requests will be reviewed promptly.
+In particular, Remotion uses its own license rather than MIT. Eligibility and use must be evaluated against the versioned license shipped in the installed Remotion package.
+
+## 7. Generated assets
+
+Generated assets were commissioned specifically for this project using generative tooling. They were manually reviewed for visible logos, sponsor marks, text artifacts, and recognizable real persons. Generation does not eliminate the possibility of third-party rights; a good-faith correction or takedown process therefore remains available.
+
+## 8. Competition terms
+
+Participation in the DAKER challenge may grant the sponsor a competition-specific license if the project receives an award. Where those accepted rules conflict with this repository notice for that granted use, the competition rules control.
+
+## 9. Corrections and takedown
+
+For a factual correction, rights concern, attribution issue, or takedown request, open a GitHub issue with:
+
+1. the affected file, screen, or URL;
+2. the factual or legal basis of the request;
+3. supporting material where available;
+4. a safe method to contact the requester.
+
+Good-faith requests will be reviewed promptly. Security vulnerabilities should be reported using [`SECURITY.md`](SECURITY.md), not a public issue.

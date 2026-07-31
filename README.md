@@ -1,45 +1,110 @@
+<div align="center">
+
 # 되감독90
 
-> 그 경기를 되감고, 내가 감독이 된다.
+### 그 경기를 되감고, 내가 감독이 된다.
 
-월드컵의 결정적 순간으로 돌아가 선수 배치, 포메이션, 교체, 전술 강도와 현장 지시를 직접 바꾸고, 그 판단이 **공간 → xG → 장면 → 스코어**에 만든 변화를 확인하는 인과형 전술 시뮬레이터입니다.
+월드컵의 결정적 순간을 다시 지휘하고, 내 판단이 만든 변화를 끝까지 추적하는 **인과형 전술 시뮬레이터**
 
+[![CI](https://github.com/Lova-clover/doegamdok90/actions/workflows/ci.yml/badge.svg)](https://github.com/Lova-clover/doegamdok90/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white)](https://vite.dev/)
-[![Tests](https://img.shields.io/badge/tests-26%20passing-7bdc2b)](#검증)
-[![License: MIT](https://img.shields.io/badge/code-MIT-7bdc2b.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-26%20passing-7bdc2b)](#검증과-품질)
+[![Code License](https://img.shields.io/badge/code-MIT-7bdc2b.svg)](LICENSE)
+[![Vercel](https://img.shields.io/badge/deploy-Vercel-000?logo=vercel)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLova-clover%2Fdoegamdok90)
+
+[대회 안내](https://daker.ai/public/hackathons/world-cup-manager-tactics-web-challenge) · [기획서 PDF](output/pdf/되감독90_기획서_제출본.pdf) · [PRD](docs/01-prd.md) · [시연영상 소스](video/) · [권리 고지](NOTICE.md)
+
+</div>
 
 ![되감독90 경기 선택 화면](docs/assets/screenshots/archive.png)
 
-## 왜 되감독90인가
+## 한 문장으로
 
-기존 전술판은 배치를 보여주지만, 그 선택이 경기에 어떤 차이를 만들었는지는 설명하지 못합니다. 되감독90은 실제 경기 사실을 출발점으로 두고 사용자의 판단을 같은 조건에서 다시 시뮬레이션합니다.
+기존 전술판이 “어디에 놓았는가”에서 끝난다면, 되감독90은 사용자의 선택이 **공간 → xG → 장면 → 스코어**를 어떻게 바꿨는지 같은 조건에서 보여줍니다.
 
-- **6개의 감독석**: 한국-가나, 한국-포르투갈, 아르헨티나-프랑스, 벨기에-일본, 브라질-크로아티아, 일본-벨기에
-- **직접 조작**: 드래그 배치, 포메이션, 교체, 템포, 폭, 압박, 위험도
-- **즉시 피드백**: 선택 직후 공간 활용도, xG, 실점 위험과 전술 설명 갱신
-- **연속 리플레이**: 공과 22명의 움직임, 슈팅 궤적, 골라인 판정을 하나의 장면으로 재생
-- **설명 가능한 결과**: 실제 경기, 기존 전술, 내 선택, 코치 제안을 한 화면에서 비교
-- **60초 첫 플레이**: 회원가입, 결제, API 키 없이 브라우저에서 바로 시작
+## 60초 심사 동선
 
-## 핵심 흐름
+| 시간 | 사용자의 행동 | 확인되는 가치 |
+| --- | --- | --- |
+| 0–10초 | 아쉬운 월드컵 경기와 결정 시점 선택 | 실제 경기 맥락에 즉시 몰입 |
+| 10–25초 | 선수를 드래그하고 포메이션·교체·전술 조정 | “내가 감독이다”라는 직접 조작감 |
+| 25–35초 | 공간 활용, xG, 역습 위험 변화 확인 | 선택과 결과 사이의 원인 이해 |
+| 35–45초 | 압박 유지·측면 전개 등 현장 지시 선택 | 경기 중 감독의 판단 경험 |
+| 45–55초 | 선수와 공이 이어지는 장면 리플레이 재생 | 전술이 실제 움직임으로 변환 |
+| 55–60초 | 실제 경기·기존 전술·내 선택·코치 제안 비교 | 판단의 이유와 대가를 리포트로 확인 |
+
+## 핵심 경험
+
+| 기능 | 구현 내용 |
+| --- | --- |
+| **아쉬운 경기 보관함** | 6개의 실제 월드컵 결정 순간과 서로 다른 감독 미션 |
+| **전술 직접 조작** | 드래그 배치, 역할 기반 포메이션, 교체, 템포·폭·압박·위험도 |
+| **즉시 인과 피드백** | 공간 활용도, xG, 실점 위험과 자연어 설명을 선택 직후 갱신 |
+| **현장 지시** | 경기 흐름에 맞춘 지시가 모멘텀·이벤트·예상 결과에 반영 |
+| **연속 리플레이** | 22명과 공의 보간 이동, 슈팅 경로와 실제 골라인 판정 |
+| **감독 리포트** | 실제 경기·기존 전술·내 선택·코치 제안의 동일 조건 비교 |
+| **재도전 루프** | 감독 점수, 매치 플랜, 다음 경기 추천과 공유용 `DG90` 도전장 |
+
+<table>
+  <tr>
+    <td width="50%"><img src="video/public/screens/board.png" alt="선수 배치와 전술 조정 화면" /></td>
+    <td width="50%"><img src="video/public/screens/ready.png" alt="전술 선택에 따른 인과 변화 화면" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>직접 조작하는 전술 보드</b></td>
+    <td align="center"><b>공간·xG·위험도의 즉시 변화</b></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="video/public/screens/live.png" alt="연속 장면 리플레이 화면" /></td>
+    <td width="50%"><img src="video/public/screens/report.png" alt="감독 결과 비교 리포트" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>골라인까지 이어지는 리플레이</b></td>
+    <td align="center"><b>실제 경기와 내 판단 비교</b></td>
+  </tr>
+</table>
+
+## 플레이 가능한 감독석
+
+- 대한민국 vs 가나 · 2022 · 61분
+- 대한민국 vs 포르투갈 · 2022 · 65분
+- 아르헨티나 vs 프랑스 · 2022 · 79분
+- 벨기에 vs 일본 · 2018 · 52분
+- 브라질 vs 크로아티아 · 2022 · 114분
+- 일본 vs 벨기에 · 2018 · 74분
+
+같은 경기라도 어느 벤치와 어느 시점에 앉느냐에 따라 문제와 승리 조건이 달라집니다.
+
+## 동작 구조
 
 ```mermaid
 flowchart LR
-    A["아쉬운 경기 선택"] --> B["선수 배치와 전술 변경"]
-    B --> C["공간·xG·위험 변화 확인"]
-    C --> D["현장 지시 선택"]
-    D --> E["연속 장면 시뮬레이션"]
-    E --> F["실제 경기와 내 판단 비교"]
-    F --> G["감독 리포트와 도전장"]
+    A["공식 경기 사실"] --> B["결정 시점과 미션"]
+    B --> C["선수 배치·교체·전술"]
+    C --> D["결정론적 로컬 엔진"]
+    D --> E["공간·xG·위험 변화"]
+    E --> F["연속 장면 리플레이"]
+    F --> G["실제 vs 기존 vs 나 vs 코치"]
 ```
 
-## 빠른 시작
+```text
+React UI
+  ├─ components/  전술판 · 코치진 · 시뮬레이션 · 리포트
+  ├─ data/        경기 시나리오 · 선수 · 미션 · 출처
+  ├─ engine/      규칙 · 점수 · 이벤트 · 장면 생성
+  └─ utils/       포메이션 · 선수 권리 · 모션 보간 · 브랜드
+```
+
+동일한 입력은 언제나 동일한 장면과 결과를 만듭니다. 외부 AI API나 확률형 서버 응답 없이 심사자가 같은 선택을 재현할 수 있습니다.
+
+## 로컬 실행
 
 필요 환경: Node.js 20 이상, npm 10 이상
 
 ```bash
-cd app
+git clone https://github.com/Lova-clover/doegamdok90.git
+cd doegamdok90/app
 npm ci
 npm run dev
 ```
@@ -47,7 +112,6 @@ npm run dev
 기본 개발 주소는 `http://localhost:5173`입니다.
 
 ```bash
-cd app
 npm test
 npm run build
 npm run preview
@@ -55,72 +119,89 @@ npm run preview
 
 ## Vercel 배포
 
-저장소 루트의 [`vercel.json`](vercel.json)에 모노레포 빌드 설정이 포함되어 있습니다.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLova-clover%2Fdoegamdok90)
 
-1. Vercel에서 이 GitHub 저장소를 Import합니다.
-2. Root Directory는 저장소 루트(`.`)를 유지합니다.
-3. 별도 환경 변수 없이 Deploy를 실행합니다.
+저장소 루트의 [`vercel.json`](vercel.json)이 다음 설정을 고정합니다.
 
-Vercel은 `npm --prefix app ci`, `npm --prefix app run build`, `app/dist` 설정을 사용합니다. 배포 후 실제 URL은 이 README 상단에 추가합니다.
+| 항목 | 값 |
+| --- | --- |
+| Root Directory | `.` |
+| Install Command | `npm --prefix app ci` |
+| Build Command | `npm --prefix app run build` |
+| Output Directory | `app/dist` |
+| 환경 변수 | 없음 |
+
+상세한 배포·점검·제출 동결 절차는 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)를 따릅니다.
 
 ## 시연 영상
 
-[`video/`](video/)에는 1920×1080, 30fps, 약 90초 분량의 Remotion 시연영상 소스가 있습니다. 외부 경기 영상이나 상업 음원을 사용하지 않고, 앱 화면과 자체 합성 관중음만 사용합니다.
+[`video/`](video/)는 실제 앱 캡처를 사용한 1920×1080, 30fps, 88초 Remotion 프로젝트입니다.
 
 ```bash
 cd video
 npm ci
 npm run studio
 npm run render
+npm run render:thumbnail
 ```
 
-렌더 결과는 `output/video/doegamdok90-demo.mp4`에 생성됩니다. 영상 구성과 YouTube 업로드 문안은 [`video/README.md`](video/README.md)를 참고하세요.
+- H.264 영상: `output/video/doegamdok90-demo.mp4`
+- YouTube 썸네일: `output/video/doegamdok90-thumbnail.png`
+- 외부 경기 영상·선수 사진·방송 화면·상업 음원 없음
+- 관중음은 고정 시드로 직접 합성한 프로젝트 자산
 
-## 프로젝트 구조
+영상 타임라인과 YouTube 제목·설명문은 [`video/README.md`](video/README.md)에 포함되어 있습니다.
+
+## 검증과 품질
+
+- **자동 테스트 26개**: 로스터, 교체 규칙, 포메이션, 전술 점수, xG, 지시 효과, 장면 보간, 골라인 판정, 권리 게이트
+- **프로덕션 빌드 통과**: Vite 정적 번들
+- **의존성 감사 통과**: 앱·영상 프로젝트 `npm audit` 0건
+- **반응형 검증**: 데스크톱과 390px 모바일 전체 흐름
+- **접근성 고려**: 키보드 조작, 명시적 버튼 라벨, 읽기 가능한 대비, 모션 감소 대응
+- **개인정보 최소화**: 로그인·결제·쿠키 추적·서버 저장 없음
+- **오프라인 결정성**: 런타임 API 키와 외부 모델 호출 없음
+
+GitHub Actions는 모든 push와 pull request에서 테스트와 프로덕션 빌드를 다시 실행합니다.
+
+## 데이터 투명성
+
+| 구분 | 예시 | 처리 원칙 |
+| --- | --- | --- |
+| **공식 사실 레이어** | 대회, 대진, 실제 스코어, 득점 시점, 주요 교체 | 연결된 공식 경기 기록을 참고하고 출처 URL 유지 |
+| **자체 체험 모델** | 선수 능력치, xG, 전술 점수, 감독 점수, 예상 스코어 | 공식 통계·예측이 아님을 화면과 문서에 명시 |
+
+되감독90은 **비공식·비상업 팬 시뮬레이션**이며 FIFA, DAKER, 국가대표팀, 선수 또는 방송사와 제휴·후원 관계가 없습니다. 실제 선수 사진, 합성 닮은꼴, 팀 엠블럼, FIFA 로고, 방송 캡처와 상업 음원을 포함하지 않습니다.
+
+## 라이선스와 권리 범위
+
+| 범위 | 조건 |
+| --- | --- |
+| 원본 애플리케이션·테스트·Remotion 소스 | [MIT License](LICENSE) |
+| `되감독90` 이름·워드마크·태그라인·`DG90` | 프로젝트 권리자 보유, 별도 허가 필요 |
+| 경기 큐레이션·모델 파라미터·기획 문서 | MIT 범위 제외, 사실 정보의 독립적 권리는 제한하지 않음 |
+| 생성 이미지·합성 오디오·스크린샷·영상 | MIT 범위 제외, 프로젝트 및 대회 제출 용도 |
+| npm 패키지·국기 | 각 제3자 라이선스 적용 |
+| DAKER 수상자 라이선스 | 참가 시 동의한 대회별 규정이 우선 |
+
+MIT 본문은 수정하지 않았으며, 범위와 예외는 [`NOTICE.md`](NOTICE.md), 자산 근거는 [`docs/14-assets-and-license.md`](docs/14-assets-and-license.md), 외부 패키지는 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)에 분리했습니다.
+
+## 저장소 구조
 
 ```text
 .
-├─ app/                 # React/Vite 웹 애플리케이션
-│  ├─ src/components/  # 전술판, 시뮬레이션, 리포트 UI
-│  ├─ src/engine/      # 규칙, 점수, 시뮬레이션 엔진
-│  ├─ src/data/        # 경기 시나리오와 로스터
-│  └─ test/            # Node 기반 자동 테스트
+├─ app/                 # React/Vite 웹 애플리케이션과 테스트
 ├─ data/                # 초기 데이터 모델 샘플
 ├─ docs/                # PRD, 기능명세, 유저플로우, 감사 기록
-├─ video/               # Remotion 시연영상 프로젝트
 ├─ output/pdf/          # 제출용 기획서 PDF
-└─ vercel.json          # Vercel 빌드 설정
+├─ scripts/             # 기획서·오디오 생성 스크립트
+├─ video/               # Remotion 시연영상 프로젝트
+├─ vercel.json          # Vercel 재현 가능한 빌드 설정
+├─ LICENSE              # 원본 소스 코드 MIT License
+└─ NOTICE.md            # 브랜드·데이터·자산 권리 범위
 ```
 
-## 기술 구조
-
-- **UI**: React 19, Vite 6, Phosphor Icons
-- **조작**: `@dnd-kit/core` 기반 선수 드래그
-- **시뮬레이션**: 시드 기반 결정론적 로컬 모델
-- **상태 보존**: 브라우저 로컬 저장
-- **배포**: 정적 Vite 빌드, 런타임 API 및 비밀키 없음
-- **영상**: Remotion 기반 재현 가능한 MP4 렌더링
-
-## 검증
-
-`npm test`는 6개 경기 로스터, 포메이션과 드래그, 교체 규칙, 전술 점수와 xG, 현장 지시, 연속 보간, 골라인 판정, 매치 플랜, 감독 리포트, 초상 권리 게이트와 브랜드 일관성을 포함한 26개 자동 테스트를 실행합니다.
-
-주요 UX와 브라우저 플레이테스트 기록은 [`app/audit/`](app/audit/)의 Markdown 보고서에 남겨 두었습니다.
-
-## 데이터와 권리
-
-되감독90은 **비공식·비상업 팬 시뮬레이션**이며 FIFA, DAKER, 국가대표팀, 선수, 방송사와 제휴·후원 관계가 없습니다.
-
-- 대회, 대진, 실제 스코어와 주요 시점은 연결된 공식 경기 기록을 참고한 사실 정보입니다.
-- 선수 능력치, xG, 전술 점수, 감독 점수와 시뮬레이션 결과는 체험을 위한 자체 모델 값이며 공식 통계나 예측이 아닙니다.
-- 실제 선수 사진, 합성 닮은꼴, 팀 엠블럼, FIFA 로고, 방송 캡처와 상업 음원을 포함하지 않습니다.
-- 선수는 이름, 등번호, 포지션과 국가색 유니폼 마커로 표현합니다.
-- 국기는 MIT 라이선스의 [`country-flag-icons`](https://github.com/catamphetamine/country-flag-icons)를 사용합니다.
-- 경기장 이미지는 프로젝트 전용 생성 자산이며 관중음은 로컬 코드로 합성했습니다.
-
-세부 근거는 [`NOTICE.md`](NOTICE.md)와 [`docs/14-assets-and-license.md`](docs/14-assets-and-license.md)를 확인하세요.
-
-## 문서
+## 핵심 문서
 
 - [기획서 PDF](output/pdf/되감독90_기획서_제출본.pdf)
 - [PRD](docs/01-prd.md)
@@ -132,8 +213,13 @@ npm run render
 - [자산·라이선스 등록부](docs/14-assets-and-license.md)
 - [최종 UX·코드 감사](docs/23-final-ux-code-winning-upgrade-v17.md)
 
-## 라이선스
+## 기여와 보안
 
-애플리케이션 **소스 코드**는 [MIT License](LICENSE)로 배포합니다. 되감독90의 이름·로고, 경기 데이터 큐레이션, 생성 이미지·오디오, 기획서와 영상은 MIT 허가 범위에서 제외되며 각각의 권리·출처 조건을 따릅니다. 자세한 범위는 [NOTICE.md](NOTICE.md)에 명시되어 있습니다.
+기여 규칙은 [`CONTRIBUTING.md`](CONTRIBUTING.md), 보안 제보 절차는 [`SECURITY.md`](SECURITY.md)를 확인하세요. 권리·사실 정정 요청은 영향을 받는 파일 또는 화면과 근거를 포함해 Issue로 남길 수 있습니다.
 
-Copyright © 2026 되감독90 contributors.
+---
+
+<div align="center">
+  <b>되감독90</b><br />
+  결과를 바꾸는 건 클릭이 아니라 판단입니다.
+</div>

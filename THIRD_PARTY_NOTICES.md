@@ -1,0 +1,32 @@
+# Third-Party Notices
+
+This file summarizes direct third-party dependencies used by 되감독90. It is provided for convenience and does not replace the license files shipped with each package. Exact versions and transitive dependencies are recorded in `app/package-lock.json` and `video/package-lock.json`.
+
+## Web application
+
+| Package | Purpose | License |
+| --- | --- | --- |
+| React / React DOM | User interface runtime | MIT |
+| Vite / `@vitejs/plugin-react` | Development and production build | MIT |
+| `@dnd-kit/core` / `@dnd-kit/utilities` | Drag interaction | MIT |
+| `@phosphor-icons/react` | Interface icons | MIT |
+| `country-flag-icons` | ISO country flag components | MIT |
+
+Copyright and full license text remain available in each installed package and its linked upstream repository.
+
+## Video project
+
+| Package | Purpose | License |
+| --- | --- | --- |
+| Remotion / `@remotion/cli` | Programmatic video composition and rendering | Remotion License |
+| React / React DOM | Video component runtime | MIT |
+
+Remotion is **not** distributed under the project's MIT license. The installed Remotion 4 package grants free use to eligible individuals, organizations with up to three employees, non-profits, and qualifying evaluations; other organizations may require a company license. The complete terms are shipped at `video/node_modules/remotion/LICENSE.md` after installation and are available from [Remotion](https://www.remotion.dev/).
+
+## Assets and factual sources
+
+Country flags, generated project assets, factual match references, and the project's no-portrait policy are documented in [`docs/14-assets-and-license.md`](docs/14-assets-and-license.md). No third-party photograph, match footage, broadcast capture, player voice, or commercial music is bundled.
+
+## No endorsement
+
+The presence of a package or factual source does not imply that its author or publisher endorses 되감독90.
