@@ -100,7 +100,7 @@ React UI
 
 ## 로컬 실행
 
-필요 환경: Node.js 20 이상, npm 10 이상
+필요 환경: Node.js 24 이상, npm 10 이상
 
 ```bash
 git clone https://github.com/Lova-clover/doegamdok90.git
@@ -126,7 +126,7 @@ npm run preview
 | 항목 | 값 |
 | --- | --- |
 | Root Directory | `.` |
-| Runtime | Node.js `20.x` |
+| Runtime | Node.js `24.x` |
 | Install Command | `npm run install:app` |
 | Build Command | `npm run build` |
 | Output Directory | `app/dist` |

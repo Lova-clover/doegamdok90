@@ -8,7 +8,7 @@ The application is a static React/Vite build with no runtime API, secret, databa
 | --- | --- |
 | Repository | `Lova-clover/doegamdok90` |
 | Root Directory | `.` |
-| Runtime | Node.js `20.x` |
+| Runtime | Node.js `24.x` |
 | Install Command | `npm run install:app` |
 | Build Command | `npm run build` |
 | Output Directory | `app/dist` |
@@ -29,7 +29,7 @@ If Vercel reports a failed deployment:
 1. In **Project Settings → Build and Deployment**, set Root Directory to `.`.
 2. Remove dashboard overrides for Install, Build, and Output Directory so the committed configuration remains the source of truth.
 3. If the existing project must keep Root Directory `app`, the compatibility file `app/vercel.json` supplies `npm ci`, `npm run build`, and `dist` automatically.
-4. Confirm Node.js is set to `20.x`.
+4. Confirm Node.js is set to `24.x`.
 5. Redeploy the latest commit without reusing the previous build cache.
 6. Inspect the failed deployment with `npx vercel inspect <deployment-id> --logs` after authenticating the CLI.
 7. Reproduce the exact contract locally with the commands below.
@@ -42,6 +42,8 @@ npx vercel build
 ```
 
 The root `package.json` exists deliberately: it gives Vercel a stable project entry point while keeping the application package isolated in `app/`.
+
+The root-level paths in `.vercelignore` are anchored with a leading slash. Do not change `/data/` back to `data/`: the unanchored form also removes the required `app/src/data/` modules from the deployment.
 
 ## Post-deploy smoke test
 

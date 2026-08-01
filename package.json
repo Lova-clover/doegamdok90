@@ -13,7 +13,7 @@
     "url": "https://github.com/Lova-clover/doegamdok90/issues"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "build": "npm --prefix app run build",
