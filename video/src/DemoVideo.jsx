@@ -151,7 +151,7 @@ const Archive = () => (
       body="6개의 실제 월드컵 결정 시점. 같은 경기도 서로 다른 감독석에서 다시 판단합니다."
       accent={["결과"]}
     />
-    <div className="match-pill">대한민국 vs 가나 · 61분 · 2:2</div>
+    <div className="match-pill">대한민국 vs 포르투갈 · 65분 · 1:1</div>
   </AbsoluteFill>
 );
 
@@ -184,9 +184,10 @@ const Tactics = () => {
       </div>
       <div className="metric-row">
         <span>포메이션 4-2-3-1</span>
-        <span>폭 72</span>
-        <span>압박 68</span>
-        <span>위험도 54</span>
+        <span>속도 7</span>
+        <span>폭 7</span>
+        <span>압박 6</span>
+        <span>위험 8</span>
       </div>
     </AbsoluteFill>
   );
@@ -194,7 +195,7 @@ const Tactics = () => {
 
 const Cause = () => {
   const frame = useCurrentFrame();
-  const items = ["내 판단", "공간 +24%", "xG +0.49", "득점 기회 증가"];
+  const items = ["내 판단", "측면 공간", "xG +0.24", "예상 3:2"];
 
   return (
     <AbsoluteFill>
@@ -282,7 +283,7 @@ const Report = () => {
         <strong>{score}</strong>
         <small>/ 100</small>
       </div>
-      <div className="report-proof">실제 2:2 &nbsp;→&nbsp; 내 선택 3:2 &nbsp;·&nbsp; 매치 플랜 3/3</div>
+      <div className="report-proof">기준 전술 2:2 &nbsp;→&nbsp; 내 선택 3:2 &nbsp;·&nbsp; 매치 플랜 3/3</div>
     </AbsoluteFill>
   );
 };
@@ -300,7 +301,7 @@ const Outro = () => {
         <Brand />
         <h2>결과를 바꾸는 건 클릭이 아니라 판단입니다.</h2>
         <p>그 경기를 되감고, 내가 감독이 된다.</p>
-        <div className="cta">지금, 감독석에 앉으세요 <span>DG90</span></div>
+        <div className="cta">지금, 감독석에 앉으세요 <span>doegamdok90.vercel.app</span></div>
         <small>비공식 팬 시뮬레이션 · 자체 모델 수치는 공식 예측이 아닙니다.</small>
       </div>
     </AbsoluteFill>
@@ -338,7 +339,7 @@ export const Thumbnail = () => (
       <Kicker>월드컵 결정적 순간을 다시 지휘하라</Kicker>
       <Brand />
       <h2>내 전술로<br /><span>결과가 바뀐다</span></h2>
-      <div className="thumbnail-score">61분 · 2:2 → <strong>3:2</strong></div>
+      <div className="thumbnail-score">65분 · 1:1 → <strong>3:2</strong></div>
     </div>
     <div className="thumbnail-badge">인과형 전술 시뮬레이터</div>
   </AbsoluteFill>
