@@ -141,7 +141,7 @@ npm run build
 npx vercel build # vercel login 및 프로젝트 연결 후
 ```
 
-Vercel 프로젝트의 **Root Directory는 반드시 저장소 루트 `.`** 이어야 합니다. 대시보드에서 `app`을 루트로 지정했다면 설정을 `.`으로 되돌리고 재배포하세요. 상세한 배포·실패 복구·제출 동결 절차는 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)를 따릅니다.
+권장 Root Directory는 저장소 루트 `.`입니다. 기존 Vercel 프로젝트가 `app`으로 고정돼 있어도 [`app/vercel.json`](app/vercel.json)이 동일한 결과를 만드는 호환 설정을 제공합니다. 대시보드의 사용자 지정 명령은 제거하고 재배포하세요. 상세한 배포·실패 복구·제출 동결 절차는 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)를 따릅니다.
 
 ## 시연 영상
 

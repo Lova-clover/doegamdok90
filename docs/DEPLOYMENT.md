@@ -27,11 +27,12 @@ The application is a static React/Vite build with no runtime API, secret, databa
 If Vercel reports a failed deployment:
 
 1. In **Project Settings → Build and Deployment**, set Root Directory to `.`.
-2. Remove dashboard overrides for Install, Build, and Output Directory so the committed `vercel.json` remains the source of truth.
-3. Confirm Node.js is set to `20.x`.
-4. Redeploy the latest commit without reusing the previous build cache.
-5. Inspect the failed deployment with `npx vercel inspect <deployment-id> --logs` after authenticating the CLI.
-6. Reproduce the exact contract locally with the commands below.
+2. Remove dashboard overrides for Install, Build, and Output Directory so the committed configuration remains the source of truth.
+3. If the existing project must keep Root Directory `app`, the compatibility file `app/vercel.json` supplies `npm ci`, `npm run build`, and `dist` automatically.
+4. Confirm Node.js is set to `20.x`.
+5. Redeploy the latest commit without reusing the previous build cache.
+6. Inspect the failed deployment with `npx vercel inspect <deployment-id> --logs` after authenticating the CLI.
+7. Reproduce the exact contract locally with the commands below.
 
 ```bash
 npm run install:app
