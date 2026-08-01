@@ -104,8 +104,8 @@ React UI
 
 ```bash
 git clone https://github.com/Lova-clover/doegamdok90.git
-cd doegamdok90/app
-npm ci
+cd doegamdok90
+npm run install:app
 npm run dev
 ```
 
@@ -126,12 +126,22 @@ npm run preview
 | 항목 | 값 |
 | --- | --- |
 | Root Directory | `.` |
-| Install Command | `npm --prefix app ci` |
-| Build Command | `npm --prefix app run build` |
+| Runtime | Node.js `20.x` |
+| Install Command | `npm run install:app` |
+| Build Command | `npm run build` |
 | Output Directory | `app/dist` |
 | 환경 변수 | 없음 |
 
-상세한 배포·점검·제출 동결 절차는 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)를 따릅니다.
+루트 [`package.json`](package.json)과 [`vercel.json`](vercel.json)이 같은 빌드 계약을 공유합니다. 따라서 GitHub Actions, 로컬 환경, Vercel이 모두 동일한 명령을 실행하며 모노레포 경로 감지 차이로 인한 배포 실패를 줄입니다.
+
+```bash
+npm run install:app
+npm test
+npm run build
+npx vercel build # vercel login 및 프로젝트 연결 후
+```
+
+Vercel 프로젝트의 **Root Directory는 반드시 저장소 루트 `.`** 이어야 합니다. 대시보드에서 `app`을 루트로 지정했다면 설정을 `.`으로 되돌리고 재배포하세요. 상세한 배포·실패 복구·제출 동결 절차는 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)를 따릅니다.
 
 ## 시연 영상
 
@@ -185,6 +195,8 @@ GitHub Actions는 모든 push와 pull request에서 테스트와 프로덕션 �
 | DAKER 수상자 라이선스 | 참가 시 동의한 대회별 규정이 우선 |
 
 MIT 본문은 수정하지 않았으며, 범위와 예외는 [`NOTICE.md`](NOTICE.md), 자산 근거는 [`docs/14-assets-and-license.md`](docs/14-assets-and-license.md), 외부 패키지는 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)에 분리했습니다.
+
+**빠른 판단 기준:** 코드를 재사용하려면 MIT 고지를 유지합니다. 브랜드·기획서·생성 자산·완성 영상까지 사용하려면 별도 허가가 필요합니다. 경기 사실은 출처를 직접 확인해 독립적으로 이용하고, 이 프로젝트의 모델 수치를 공식 통계처럼 표시해서는 안 됩니다.
 
 ## 저장소 구조
 

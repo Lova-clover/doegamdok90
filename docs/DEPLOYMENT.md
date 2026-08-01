@@ -8,8 +8,9 @@ The application is a static React/Vite build with no runtime API, secret, databa
 | --- | --- |
 | Repository | `Lova-clover/doegamdok90` |
 | Root Directory | `.` |
-| Install Command | `npm --prefix app ci` |
-| Build Command | `npm --prefix app run build` |
+| Runtime | Node.js `20.x` |
+| Install Command | `npm run install:app` |
+| Build Command | `npm run build` |
 | Output Directory | `app/dist` |
 | Environment Variables | None |
 
@@ -20,6 +21,26 @@ The application is a static React/Vite build with no runtime API, secret, databa
 3. Do not add environment variables.
 4. Deploy and wait for the production status to become Ready.
 5. Disable deployment protection for the production URL so judges can enter without an account.
+
+## Failed deployment recovery
+
+If Vercel reports a failed deployment:
+
+1. In **Project Settings → Build and Deployment**, set Root Directory to `.`.
+2. Remove dashboard overrides for Install, Build, and Output Directory so the committed `vercel.json` remains the source of truth.
+3. Confirm Node.js is set to `20.x`.
+4. Redeploy the latest commit without reusing the previous build cache.
+5. Inspect the failed deployment with `npx vercel inspect <deployment-id> --logs` after authenticating the CLI.
+6. Reproduce the exact contract locally with the commands below.
+
+```bash
+npm run install:app
+npm test
+npm run build
+npx vercel build
+```
+
+The root `package.json` exists deliberately: it gives Vercel a stable project entry point while keeping the application package isolated in `app/`.
 
 ## Post-deploy smoke test
 
@@ -39,11 +60,10 @@ Run the full path in a signed-out browser window:
 Also verify:
 
 ```bash
-cd app
-npm ci
+npm run install:app
 npm test
 npm run build
-npm audit --omit=dev
+npm --prefix app audit --omit=dev
 ```
 
 ## Competition submission freeze

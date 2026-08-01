@@ -1,0 +1,25 @@
+{
+  "name": "doegamdok90-repository",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repository entry point for the 되감독90 causal football tactics simulator",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lova-clover/doegamdok90.git"
+  },
+  "homepage": "https://github.com/Lova-clover/doegamdok90#readme",
+  "bugs": {
+    "url": "https://github.com/Lova-clover/doegamdok90/issues"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "build": "npm --prefix app run build",
+    "test": "npm --prefix app test",
+    "dev": "npm --prefix app run dev",
+    "preview": "npm --prefix app run preview",
+    "install:app": "npm --prefix app ci"
+  }
+}

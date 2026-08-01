@@ -79,3 +79,15 @@ For a factual correction, rights concern, attribution issue, or takedown request
 4. a safe method to contact the requester.
 
 Good-faith requests will be reviewed promptly. Security vulnerabilities should be reported using [`SECURITY.md`](SECURITY.md), not a public issue.
+
+## 10. Practical reuse guide
+
+| Intended use | Required action |
+| --- | --- |
+| Fork or modify the original source code | Keep the MIT copyright and license notice; clearly identify modifications. |
+| Reuse a third-party dependency | Follow that dependency's own license, including the Remotion terms where applicable. |
+| Reuse the project name, `DG90`, visual identity, generated assets, PDF, screenshots, or rendered video | Obtain separate permission from the applicable rightsholder. |
+| Reuse historical match facts | Verify the facts independently, cite an appropriate source, and do not copy protected editorial or media content. |
+| Publish simulation metrics or outcomes | Label them as unofficial model output and do not imply endorsement, prediction accuracy, or official status. |
+
+Nothing in this notice grants trademark, publicity, privacy, database, image, music, broadcast, or endorsement rights that the project owner does not hold. This notice is a project rights statement, not legal advice.
