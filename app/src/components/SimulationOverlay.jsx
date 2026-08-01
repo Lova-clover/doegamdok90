@@ -7,6 +7,7 @@ import { FastForward } from "@phosphor-icons/react/dist/csr/FastForward";
 import { FlagCheckered } from "@phosphor-icons/react/dist/csr/FlagCheckered";
 import { Gauge } from "@phosphor-icons/react/dist/csr/Gauge";
 import { GitBranch } from "@phosphor-icons/react/dist/csr/GitBranch";
+import { Pause } from "@phosphor-icons/react/dist/csr/Pause";
 import { Play } from "@phosphor-icons/react/dist/csr/Play";
 import { ShieldCheck } from "@phosphor-icons/react/dist/csr/ShieldCheck";
 import { SoccerBall } from "@phosphor-icons/react/dist/csr/SoccerBall";
@@ -290,6 +291,7 @@ export function SimulationOverlay({
   const [frameIndex, setFrameIndex] = useState(0);
   const [frameProgress, setFrameProgress] = useState(0);
   const [speed, setSpeed] = useState(1);
+  const [paused, setPaused] = useState(false);
   const [finished, setFinished] = useState(false);
   const liveShellRef = useRef(null);
   const motionProgressRef = useRef(0);
@@ -318,12 +320,14 @@ export function SimulationOverlay({
   );
 
   useEffect(() => {
-    if (!started || finished) return undefined;
+    if (!started || finished || paused) return undefined;
 
     const finalCheckpoint = frameIndex >= frameCount - 1;
     const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const baseDuration = reducedMotion
-      ? 80
+      ? finalCheckpoint
+        ? 520
+        : 220
       : finalCheckpoint
         ? ["goal", "concede"].includes(currentEvent.kind)
           ? 1380
@@ -364,7 +368,7 @@ export function SimulationOverlay({
 
     animationFrame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [activeIndex, currentEvent.id, currentEvent.kind, events.length, finished, frameCount, frameIndex, speed, started]);
+  }, [activeIndex, currentEvent.id, currentEvent.kind, events.length, finished, frameCount, frameIndex, paused, speed, started]);
 
   useEffect(() => {
     if (!started || !goalMoment || celebratedEventIdsRef.current.has(currentEvent.id)) return;
@@ -530,6 +534,18 @@ export function SimulationOverlay({
                 aria-label="경기 결과와 감독 리포트 보기"
               >
                 <FlagCheckered size={18} weight="fill" /> {summary.compactScore} 결과
+              </button>
+            )}
+            {!isFinished && (
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => setPaused((value) => !value)}
+                aria-label={paused ? "시뮬레이션 계속 재생" : "시뮬레이션 일시정지"}
+                aria-pressed={paused}
+              >
+                {paused ? <Play size={18} weight="fill" /> : <Pause size={18} weight="fill" />}
+                {paused ? "계속" : "정지"}
               </button>
             )}
             {!isFinished && (

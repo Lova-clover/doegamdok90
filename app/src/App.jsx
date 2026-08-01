@@ -344,7 +344,7 @@ export function App() {
       outcomeTitle: scoreChanged
         ? `${baselineSimulation.summary.compactScore} 예상이 ${simulation.summary.compactScore}로 바뀝니다`
         : "스코어 전에 득점 기대값이 먼저 변했습니다",
-      outcomeCopy: `내 xG ${formatSigned(xgForDelta)} · 상대 xG ${formatSigned(xgAgainstDelta)}`,
+      outcomeCopy: `기준선 대비 xG · 우리 ${formatSigned(xgForDelta)} · 상대 ${formatSigned(xgAgainstDelta)}`,
       baselineScore: baselineSimulation.summary.compactScore,
       currentScore: simulation.summary.compactScore,
     };
