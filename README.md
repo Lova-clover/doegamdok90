@@ -12,8 +12,9 @@
 [![Tests](https://img.shields.io/badge/tests-26%20passing-7bdc2b)](#검증과-품질)
 [![Code License](https://img.shields.io/badge/code-MIT-7bdc2b.svg)](LICENSE)
 [![Vercel](https://img.shields.io/badge/deploy-Vercel-000?logo=vercel)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLova-clover%2Fdoegamdok90)
+[![Live Demo](https://img.shields.io/badge/PLAY-LIVE-7bdc2b?logo=vercel&logoColor=black)](https://doegamdok90.vercel.app)
 
-[대회 안내](https://daker.ai/public/hackathons/world-cup-manager-tactics-web-challenge) · [기획서 PDF](output/pdf/되감독90_기획서_제출본.pdf) · [PRD](docs/01-prd.md) · [시연영상 소스](video/) · [권리 고지](NOTICE.md)
+[서비스 실행](https://doegamdok90.vercel.app) · [대회 안내](https://daker.ai/public/hackathons/world-cup-manager-tactics-web-challenge) · [기획서 PDF](output/pdf/되감독90_기획서_제출본.pdf) · [PRD](docs/01-prd.md) · [시연영상 소스](video/) · [권리 고지](NOTICE.md)
 
 </div>
 
@@ -118,6 +119,8 @@ npm run preview
 ```
 
 ## Vercel 배포
+
+**Production:** <https://doegamdok90.vercel.app>
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLova-clover%2Fdoegamdok90)
 
