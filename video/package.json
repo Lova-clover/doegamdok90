@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.jsx",
-    "render": "remotion render src/index.jsx Doegamdok90Demo ../output/video/doegamdok90-demo.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p --overwrite",
+    "tts": "powershell -ExecutionPolicy Bypass -File scripts/generate-tts.ps1",
+    "render:raw": "remotion render src/index.jsx Doegamdok90Demo ../output/video/doegamdok90-demo.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p --overwrite",
+    "render": "npm run render:raw && powershell -ExecutionPolicy Bypass -File scripts/master-video.ps1",
     "render:thumbnail": "remotion still src/index.jsx Doegamdok90Thumbnail ../output/video/doegamdok90-thumbnail.png --frame=90 --overwrite"
   },
   "dependencies": {

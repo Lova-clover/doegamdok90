@@ -28,7 +28,14 @@ const sceneMeta = [
 
 const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
 
-const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28 }) => {
+const overlayOpacity = (frame, hold, fade = 30) => interpolate(
+  frame,
+  [0, 18, hold, hold + fade],
+  [0, 1, 1, 0],
+  { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+);
+
+const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28, revealAt }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const scale = interpolate(frame, [0, durationInFrames], [zoom, zoom + 0.045], {
@@ -36,6 +43,13 @@ const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28 }) => {
     extrapolateRight: "clamp",
     easing: easeOut,
   });
+  const reveal = revealAt === undefined ? 0 : interpolate(
+    frame,
+    [revealAt, revealAt + 24],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  const currentShade = shade + (0.035 - shade) * reveal;
 
   return (
     <AbsoluteFill>
@@ -49,21 +63,22 @@ const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28 }) => {
           transform: `scale(${scale})`,
         }}
       />
-      <AbsoluteFill style={{ background: `rgba(4, 8, 8, ${shade})` }} />
-      <AbsoluteFill className="screen-vignette" />
+      <AbsoluteFill style={{ background: `rgba(4, 8, 8, ${currentShade})` }} />
+      <AbsoluteFill className="screen-vignette" style={{ opacity: 1 - reveal * 0.92 }} />
     </AbsoluteFill>
   );
 };
 
 const Kicker = ({ children }) => <div className="kicker">{children}</div>;
 
-const Caption = ({ kicker, title, body, align = "left", accent = [] }) => {
+const Caption = ({ kicker, title, body, align = "left", accent = [], hold = 150, fade = 30 }) => {
   const frame = useCurrentFrame();
   const y = interpolate(frame, [0, 24], [50, 0], {
     extrapolateRight: "clamp",
     easing: easeOut,
   });
-  const opacity = interpolate(frame, [0, 18], [0, 1], {
+  const opacity = interpolate(frame, [0, 18, hold, hold + fade], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const highlighted = title.split(/(되감독90|내 판단|직접|즉시|GOAL|결과)/g);
@@ -142,18 +157,24 @@ const Intro = () => {
   );
 };
 
-const Archive = () => (
-  <AbsoluteFill>
-    <Screen src="screens/archive.png" position="center 32%" shade={0.34} />
-    <Caption
-      kicker="01 / HEARTBREAK ARCHIVE"
-      title="사람들이 아쉬워한 순간으로 돌아갑니다."
-      body="6개의 실제 월드컵 결정 시점. 같은 경기도 서로 다른 감독석에서 다시 판단합니다."
-      accent={["결과"]}
-    />
-    <div className="match-pill">대한민국 vs 포르투갈 · 65분 · 1:1</div>
-  </AbsoluteFill>
-);
+const Archive = () => {
+  const frame = useCurrentFrame();
+  const detailOpacity = overlayOpacity(frame, 225, 24);
+
+  return (
+    <AbsoluteFill>
+      <Screen src="screens/archive.png" position="center 32%" shade={0.34} revealAt={180} />
+      <Caption
+        kicker="01 / HEARTBREAK ARCHIVE"
+        title="사람들이 아쉬워한 순간으로 돌아갑니다."
+        body="6개의 실제 월드컵 결정 시점. 같은 경기도 서로 다른 감독석에서 다시 판단합니다."
+        accent={["결과"]}
+        hold={140}
+      />
+      <div className="match-pill" style={{ opacity: detailOpacity }}>대한민국 vs 포르투갈 · 65분 · 1:1</div>
+    </AbsoluteFill>
+  );
+};
 
 const Tactics = () => {
   const frame = useCurrentFrame();
@@ -168,21 +189,23 @@ const Tactics = () => {
     extrapolateRight: "clamp",
     easing: easeOut,
   });
+  const detailOpacity = overlayOpacity(frame, 330, 30);
 
   return (
     <AbsoluteFill>
-      <Screen src="screens/board.png" position="center" shade={0.18} />
+      <Screen src="screens/board.png" position="center" shade={0.18} revealAt={195} />
       <Caption
         kicker="02 / YOUR CALL"
         title="선수 한 명의 위치부터 직접 결정합니다."
         body="드래그 배치, 포메이션, 교체, 템포·폭·압박·위험도를 한 화면에서 조작합니다."
         accent={["직접"]}
+        hold={155}
       />
-      <div className="cursor" style={{ left: x, top: y, transform: `scale(${pulse})` }}>
+      <div className="cursor" style={{ left: x, top: y, opacity: detailOpacity, transform: `scale(${pulse})` }}>
         <div className="cursor-ring" />
         <div className="cursor-hand">✦</div>
       </div>
-      <div className="metric-row">
+      <div className="metric-row" style={{ opacity: detailOpacity }}>
         <span>포메이션 4-2-3-1</span>
         <span>속도 7</span>
         <span>폭 7</span>
@@ -196,19 +219,21 @@ const Tactics = () => {
 const Cause = () => {
   const frame = useCurrentFrame();
   const items = ["내 판단", "측면 공간", "xG +0.24", "예상 3:2"];
+  const detailOpacity = overlayOpacity(frame, 285, 30);
 
   return (
     <AbsoluteFill>
-      <Screen src="screens/ready.png" position="center" shade={0.4} />
+      <Screen src="screens/ready.png" position="center" shade={0.4} revealAt={205} />
       <Caption
         kicker="03 / CAUSE & EFFECT"
         title="내 판단이 만든 변화를 즉시 설명합니다."
         body="결과 숫자만 보여주지 않습니다. 무엇을 바꿔 어떤 공간과 대가가 생겼는지 연결합니다."
         accent={["내 판단", "즉시"]}
+        hold={150}
       />
-      <div className="cause-chain">
+      <div className="cause-chain" style={{ opacity: detailOpacity }}>
         {items.map((item, index) => {
-          const reveal = interpolate(frame, [35 + index * 22, 58 + index * 22], [0, 1], {
+          const reveal = interpolate(frame, [150 + index * 16, 170 + index * 16], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           });
@@ -222,35 +247,36 @@ const Cause = () => {
           );
         })}
       </div>
-      <div className="tradeoff">공격 기회 ↑ &nbsp;·&nbsp; 역습 위험도 ↑</div>
+      <div className="tradeoff" style={{ opacity: detailOpacity }}>공격 기회 ↑ &nbsp;·&nbsp; 역습 위험도 ↑</div>
     </AbsoluteFill>
   );
 };
 
 const Replay = () => {
   const frame = useCurrentFrame();
-  const goal = interpolate(frame, [270, 300, 355], [0, 1, 0], {
+  const goal = interpolate(frame, [330, 350, 405], [0, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const ballX = interpolate(frame, [80, 310], [1040, 1515], {
+  const ballX = interpolate(frame, [230, 360], [1040, 1515], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.inOut(Easing.cubic),
   });
-  const ballY = interpolate(frame, [80, 200, 310], [690, 470, 385], {
+  const ballY = interpolate(frame, [230, 300, 360], [690, 470, 385], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   return (
     <AbsoluteFill>
-      <Screen src="screens/live.png" position="center" shade={0.22} />
+      <Screen src="screens/live.png" position="center" shade={0.22} revealAt={250} />
       <Caption
         kicker="04 / LIVE REPLAY"
         title="공이 골라인을 통과한 순간에만 GOAL."
         body="선수와 공은 끊기지 않고 움직이고, 현장 지시는 공간·모멘텀·이벤트·스코어를 함께 바꿉니다."
         accent={["GOAL"]}
+        hold={190}
       />
       <div className="ball-tracer" style={{ left: ballX, top: ballY }} />
       <div className="goal-flash" style={{ opacity: goal, transform: `scale(${0.7 + goal * 0.3})` }}>
@@ -263,7 +289,8 @@ const Replay = () => {
 
 const Report = () => {
   const frame = useCurrentFrame();
-  const score = Math.round(interpolate(frame, [40, 150], [0, 92], {
+  const detailOpacity = overlayOpacity(frame, 360, 30);
+  const score = Math.round(interpolate(frame, [190, 280], [0, 92], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: easeOut,
@@ -271,19 +298,20 @@ const Report = () => {
 
   return (
     <AbsoluteFill>
-      <Screen src="screens/report.png" position="center" shade={0.25} />
+      <Screen src="screens/report.png" position="center" shade={0.25} revealAt={220} />
       <Caption
         kicker="05 / MANAGER REPORT"
         title="실제 경기와 내 결과를 한 화면에서 비교합니다."
         body="기존 전술, 내 선택, 코치 제안을 같은 시점과 목표로 비교해 판단의 이유와 대가를 남깁니다."
         accent={["내 결과", "결과"]}
+        hold={175}
       />
-      <div className="score-orbit">
+      <div className="score-orbit" style={{ opacity: detailOpacity }}>
         <span>감독 점수</span>
         <strong>{score}</strong>
         <small>/ 100</small>
       </div>
-      <div className="report-proof">기준 전술 2:2 &nbsp;→&nbsp; 내 선택 3:2 &nbsp;·&nbsp; 매치 플랜 3/3</div>
+      <div className="report-proof" style={{ opacity: detailOpacity }}>기준 전술 2:2 &nbsp;→&nbsp; 내 선택 3:2 &nbsp;·&nbsp; 매치 플랜 3/3</div>
     </AbsoluteFill>
   );
 };
@@ -308,18 +336,42 @@ const Outro = () => {
   );
 };
 
+const narrationTracks = [
+  { from: 10, duration: 187, src: "audio/tts/01-intro.wav" },
+  { from: 225, duration: 188, src: "audio/tts/02-archive.wav" },
+  { from: 555, duration: 186, src: "audio/tts/03-tactics.wav" },
+  { from: 1035, duration: 192, src: "audio/tts/04-cause.wav" },
+  { from: 1395, duration: 237, src: "audio/tts/05-replay.wav" },
+  { from: 1875, duration: 202, src: "audio/tts/06-report.wav" },
+  { from: 2355, duration: 264, src: "audio/tts/07-outro.wav" },
+];
+
+const NarrationAudio = () => (
+  <>
+    {narrationTracks.map((track) => (
+      <Sequence key={track.src} from={track.from} durationInFrames={track.duration}>
+        <Audio src={staticFile(track.src)} volume={1} />
+      </Sequence>
+    ))}
+  </>
+);
+
 const CrowdAudio = () => {
   const frame = useCurrentFrame();
-  const volume = interpolate(frame, [0, 45, 2300, 2639], [0, 0.14, 0.14, 0], {
+  const envelope = interpolate(frame, [0, 45, 2300, 2639], [0, 0.14, 0.14, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  return <Audio src={staticFile("audio/stadium-crowd.wav")} volume={volume} loop />;
+  const isNarrating = narrationTracks.some(
+    ({ from, duration }) => frame >= from - 8 && frame <= from + duration + 8,
+  );
+  return <Audio src={staticFile("audio/stadium-crowd.wav")} volume={envelope * (isNarrating ? 0.24 : 1)} loop />;
 };
 
 export const DemoVideo = () => (
   <AbsoluteFill className="video-root">
     <CrowdAudio />
+    <NarrationAudio />
     <Sequence from={0} durationInFrames={210}><Intro /></Sequence>
     <Sequence from={210} durationInFrames={330}><Archive /></Sequence>
     <Sequence from={540} durationInFrames={480}><Tactics /></Sequence>
