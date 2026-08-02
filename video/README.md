@@ -7,7 +7,9 @@ Remotion으로 제작한 1920×1080, 30fps, 약 88초 분량의 대회 제출용
 ```bash
 npm ci
 python -m pip install -r requirements-tts.txt
+python -m pip install -r requirements-audio.txt
 npm run tts
+npm run audio
 npm run render
 npm run render:thumbnail
 ```
@@ -15,7 +17,7 @@ npm run render:thumbnail
 - 영상: `../output/video/doegamdok90-demo.mp4`
 - 썸네일: `../output/video/doegamdok90-thumbnail.png`
 
-외부 경기 영상, 선수 사진, 방송 화면, 상업 음원을 사용하지 않습니다. 화면은 실제 앱 캡처이며 관중음은 프로젝트의 고정 시드 합성 오디오입니다. 한국어 내레이션은 Microsoft 한국어 신경망 음성 `ko-KR-HyunsuMultilingualNeural`을 스포츠 프레젠테이션 속도(`+6%`)로 생성하며, 장면별 대본과 생성 설정은 `scripts/generate-tts.py`에 포함했습니다. 음성 생성은 빌드 단계에서만 수행되며 웹서비스 실행 중 외부 TTS API를 호출하지 않습니다.
+외부 경기 영상, 선수 사진, 방송 화면, 상업 음원을 사용하지 않습니다. 화면은 실제 앱 캡처이며 관중음은 고주파 노이즈를 억제한 48kHz 스테레오 저역 앰비언스로 직접 합성하며, 클릭음도 프로젝트에서 생성합니다. 한국어 내레이션은 Microsoft 한국어 신경망 음성 `ko-KR-HyunsuMultilingualNeural`을 스포츠 프레젠테이션 속도(`+6%`)로 생성하며, 장면별 대본과 생성 설정은 `scripts/generate-tts.py`에 포함했습니다. 음성 생성은 빌드 단계에서만 수행되며 웹서비스 실행 중 외부 TTS API를 호출하지 않습니다.
 
 각 주요 장면은 설명과 내레이션이 먼저 재생된 뒤 오버레이와 음영이 사라집니다. 이후 실제 서비스 화면만 3~9초간 보여 주어 조작 화면과 결과 UI를 직접 확인할 수 있습니다.
 

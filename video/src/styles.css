@@ -175,29 +175,44 @@ body {
   color: #f6f8f2;
 }
 
-.cursor {
+.product-cursor {
   position: absolute;
-  z-index: 8;
-  width: 76px;
-  height: 76px;
-  margin: -38px 0 0 -38px;
+  z-index: 9;
+  width: 58px;
+  height: 58px;
+  margin: -8px 0 0 -8px;
+  transform-origin: 8px 8px;
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 7px rgba(0, 0, 0, 0.9));
 }
 
-.cursor-ring {
+.product-cursor svg {
+  display: block;
+}
+
+.pointer-ripple {
   position: absolute;
-  inset: 0;
+  left: -17px;
+  top: -17px;
+  width: 48px;
+  height: 48px;
   border: 4px solid #91e52f;
   border-radius: 50%;
-  box-shadow: 0 0 28px rgba(145, 229, 47, 0.8);
+  box-shadow: 0 0 22px rgba(145, 229, 47, 0.82);
+  transform-origin: center;
 }
 
-.cursor-hand {
+.drag-badge {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-size: 30px;
+  left: 34px;
+  top: 44px;
+  padding: 7px 11px;
+  border: 1px solid rgba(145, 229, 47, 0.9);
+  border-radius: 4px;
+  background: rgba(4, 8, 8, 0.92);
+  color: #dfffba;
+  font-size: 16px;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .metric-row {

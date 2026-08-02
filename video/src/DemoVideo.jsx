@@ -1,4 +1,5 @@
 import React from "react";
+import { CursorIcon } from "@phosphor-icons/react/dist/icons/Cursor";
 import {
   AbsoluteFill,
   Audio,
@@ -34,6 +35,53 @@ const overlayOpacity = (frame, hold, fade = 30) => interpolate(
   [0, 1, 1, 0],
   { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
 );
+
+const ProductCursor = ({ points, clickFrames = [], dragRange, visible = [0, 999] }) => {
+  const frame = useCurrentFrame();
+  const frames = points.map((point) => point.frame);
+  const x = interpolate(frame, frames, points.map((point) => point.x), {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.inOut(Easing.cubic),
+  });
+  const y = interpolate(frame, frames, points.map((point) => point.y), {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.inOut(Easing.cubic),
+  });
+  const opacity = interpolate(
+    frame,
+    [visible[0], visible[0] + 10, visible[1] - 10, visible[1]],
+    [0, 1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  const clickStrength = clickFrames.reduce((peak, clickFrame) => Math.max(
+    peak,
+    interpolate(
+      frame,
+      [clickFrame - 2, clickFrame, clickFrame + 10],
+      [0, 1, 0],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    ),
+  ), 0);
+  const dragging = dragRange && frame >= dragRange[0] && frame <= dragRange[1];
+
+  return (
+    <div
+      className={`product-cursor${dragging ? " is-dragging" : ""}`}
+      style={{
+        left: x,
+        top: y,
+        opacity,
+        transform: `scale(${1 - clickStrength * 0.14})`,
+      }}
+    >
+      <div className="pointer-ripple" style={{ opacity: clickStrength, transform: `scale(${0.55 + clickStrength * 0.75})` }} />
+      <CursorIcon size={58} weight="fill" color="#ffffff" />
+      {dragging ? <span className="drag-badge">드래그</span> : null}
+    </div>
+  );
+};
 
 const Screen = ({ src, position = "center", zoom = 1.03, shade = 0.28, revealAt }) => {
   const frame = useCurrentFrame();
@@ -171,6 +219,16 @@ const Archive = () => {
         accent={["결과"]}
         hold={140}
       />
+      <ProductCursor
+        points={[
+          { frame: 165, x: 1510, y: 780 },
+          { frame: 205, x: 650, y: 430 },
+          { frame: 255, x: 960, y: 785 },
+          { frame: 300, x: 960, y: 785 },
+        ]}
+        clickFrames={[205, 255]}
+        visible={[155, 315]}
+      />
       <div className="match-pill" style={{ opacity: detailOpacity }}>대한민국 vs 포르투갈 · 65분 · 1:1</div>
     </AbsoluteFill>
   );
@@ -178,17 +236,6 @@ const Archive = () => {
 
 const Tactics = () => {
   const frame = useCurrentFrame();
-  const pulse = 1 + Math.sin(frame / 8) * 0.04;
-  const x = interpolate(frame, [90, 230], [1260, 1050], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: easeOut,
-  });
-  const y = interpolate(frame, [90, 230], [660, 470], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: easeOut,
-  });
   const detailOpacity = overlayOpacity(frame, 330, 30);
 
   return (
@@ -201,10 +248,19 @@ const Tactics = () => {
         accent={["직접"]}
         hold={155}
       />
-      <div className="cursor" style={{ left: x, top: y, opacity: detailOpacity, transform: `scale(${pulse})` }}>
-        <div className="cursor-ring" />
-        <div className="cursor-hand">✦</div>
-      </div>
+      <ProductCursor
+        points={[
+          { frame: 155, x: 430, y: 315 },
+          { frame: 195, x: 430, y: 315 },
+          { frame: 230, x: 1180, y: 570 },
+          { frame: 295, x: 1040, y: 425 },
+          { frame: 350, x: 1515, y: 555 },
+          { frame: 410, x: 1515, y: 720 },
+        ]}
+        clickFrames={[195, 230, 350, 410]}
+        dragRange={[230, 295]}
+        visible={[145, 445]}
+      />
       <div className="metric-row" style={{ opacity: detailOpacity }}>
         <span>포메이션 4-2-3-1</span>
         <span>속도 7</span>
@@ -230,6 +286,15 @@ const Cause = () => {
         body="결과 숫자만 보여주지 않습니다. 무엇을 바꿔 어떤 공간과 대가가 생겼는지 연결합니다."
         accent={["내 판단", "즉시"]}
         hold={150}
+      />
+      <ProductCursor
+        points={[
+          { frame: 160, x: 1120, y: 610 },
+          { frame: 235, x: 960, y: 790 },
+          { frame: 285, x: 960, y: 790 },
+        ]}
+        clickFrames={[235]}
+        visible={[150, 300]}
       />
       <div className="cause-chain" style={{ opacity: detailOpacity }}>
         {items.map((item, index) => {
@@ -278,6 +343,15 @@ const Replay = () => {
         accent={["GOAL"]}
         hold={190}
       />
+      <ProductCursor
+        points={[
+          { frame: 110, x: 500, y: 790 },
+          { frame: 170, x: 650, y: 790 },
+          { frame: 215, x: 650, y: 790 },
+        ]}
+        clickFrames={[170]}
+        visible={[100, 225]}
+      />
       <div className="ball-tracer" style={{ left: ballX, top: ballY }} />
       <div className="goal-flash" style={{ opacity: goal, transform: `scale(${0.7 + goal * 0.3})` }}>
         GOAL
@@ -305,6 +379,15 @@ const Report = () => {
         body="기존 전술, 내 선택, 코치 제안을 같은 시점과 목표로 비교해 판단의 이유와 대가를 남깁니다."
         accent={["내 결과", "결과"]}
         hold={175}
+      />
+      <ProductCursor
+        points={[
+          { frame: 205, x: 1210, y: 535 },
+          { frame: 310, x: 1535, y: 790 },
+          { frame: 370, x: 1535, y: 790 },
+        ]}
+        clickFrames={[310]}
+        visible={[195, 385]}
       />
       <div className="score-orbit" style={{ opacity: detailOpacity }}>
         <span>감독 점수</span>
@@ -356,6 +439,18 @@ const NarrationAudio = () => (
   </>
 );
 
+const interactionClickFrames = [415, 465, 735, 770, 890, 950, 1255, 1550, 2170];
+
+const InteractionAudio = () => (
+  <>
+    {interactionClickFrames.map((frame) => (
+      <Sequence key={frame} from={frame} durationInFrames={6}>
+        <Audio src={staticFile("audio/ui-click.wav")} volume={0.24} />
+      </Sequence>
+    ))}
+  </>
+);
+
 const CrowdAudio = () => {
   const frame = useCurrentFrame();
   const baseEnvelope = interpolate(
@@ -388,6 +483,7 @@ export const DemoVideo = () => (
   <AbsoluteFill className="video-root">
     <CrowdAudio />
     <NarrationAudio />
+    <InteractionAudio />
     <Sequence from={0} durationInFrames={210}><Intro /></Sequence>
     <Sequence from={210} durationInFrames={330}><Archive /></Sequence>
     <Sequence from={540} durationInFrames={480}><Tactics /></Sequence>
