@@ -7,7 +7,7 @@ export const RemotionRoot = () => (
     <Composition
       id="Doegamdok90Demo"
       component={DemoVideo}
-      durationInFrames={2640}
+      durationInFrames={2096}
       fps={30}
       width={1920}
       height={1080}
