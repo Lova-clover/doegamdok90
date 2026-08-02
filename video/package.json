@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.jsx",
-    "tts": "powershell -ExecutionPolicy Bypass -File scripts/generate-tts.ps1",
+    "tts": "python scripts/generate-tts.py",
     "render:raw": "remotion render src/index.jsx Doegamdok90Demo ../output/video/doegamdok90-demo.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p --overwrite",
     "render": "npm run render:raw && powershell -ExecutionPolicy Bypass -File scripts/master-video.ps1",
     "render:thumbnail": "remotion still src/index.jsx Doegamdok90Thumbnail ../output/video/doegamdok90-thumbnail.png --frame=90 --overwrite"

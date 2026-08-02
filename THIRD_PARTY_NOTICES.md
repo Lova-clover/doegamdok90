@@ -19,6 +19,7 @@ Copyright and full license text remain available in each installed package and i
 | Package | Purpose | License |
 | --- | --- | --- |
 | Remotion / `@remotion/cli` 4.x | Programmatic video composition and rendering | Remotion License |
+| edge-tts 7.2.8 | Build-time Korean neural narration generation | LGPL-3.0 |
 | React / React DOM 19.2.0 | Video component runtime | MIT |
 
 Remotion is **not** distributed under the project's MIT license. The installed Remotion 4 package grants free use to eligible individuals, organizations with up to three employees, non-profits, and qualifying evaluations; other organizations may require a company license. The complete terms are shipped at `video/node_modules/remotion/LICENSE.md` after installation and are available from [Remotion](https://www.remotion.dev/).

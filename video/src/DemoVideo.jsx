@@ -337,13 +337,13 @@ const Outro = () => {
 };
 
 const narrationTracks = [
-  { from: 10, duration: 187, src: "audio/tts/01-intro.wav" },
-  { from: 225, duration: 188, src: "audio/tts/02-archive.wav" },
-  { from: 555, duration: 186, src: "audio/tts/03-tactics.wav" },
-  { from: 1035, duration: 192, src: "audio/tts/04-cause.wav" },
-  { from: 1395, duration: 237, src: "audio/tts/05-replay.wav" },
-  { from: 1875, duration: 202, src: "audio/tts/06-report.wav" },
-  { from: 2355, duration: 264, src: "audio/tts/07-outro.wav" },
+  { from: 10, duration: 190, src: "audio/tts/01-intro.mp3" },
+  { from: 225, duration: 250, src: "audio/tts/02-archive.mp3" },
+  { from: 555, duration: 240, src: "audio/tts/03-tactics.mp3" },
+  { from: 1035, duration: 250, src: "audio/tts/04-cause.mp3" },
+  { from: 1395, duration: 290, src: "audio/tts/05-replay.mp3" },
+  { from: 1875, duration: 250, src: "audio/tts/06-report.mp3" },
+  { from: 2355, duration: 280, src: "audio/tts/07-outro.mp3" },
 ];
 
 const NarrationAudio = () => (
