@@ -34,3 +34,6 @@ output/pdf/*
 
 # Rendered video is delivered to YouTube, source stays in video/
 output/video/
+
+# Raw browser recordings used while producing the final demo
+video/capture-output/
