@@ -4,7 +4,21 @@ import {DemoVideo, Thumbnail} from "./DemoVideo";
 
 export const RemotionRoot = () => (
   <>
-    <Composition id="Doegamdok90Demo" component={DemoVideo} durationInFrames={2150} fps={30} width={1920} height={1080} />
-    <Composition id="Doegamdok90Thumbnail" component={Thumbnail} durationInFrames={120} fps={30} width={1920} height={1080} />
+    <Composition
+      id="Doegamdok90Demo"
+      component={DemoVideo}
+      durationInFrames={1920}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="Doegamdok90Thumbnail"
+      component={Thumbnail}
+      durationInFrames={120}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
   </>
 );

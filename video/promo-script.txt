@@ -1,15 +1,4 @@
-import asyncio
-from pathlib import Path
-
-import edge_tts
-
-
-VOICE = "ko-KR-HyunsuMultilingualNeural"
-RATE = "+20%"
-PITCH = "-2Hz"
-VOLUME = "+0%"
-
-NARRATION = """축구를 보다 보면, 누구나 한 번쯤 생각합니다.
+축구를 보다 보면, 누구나 한 번쯤 생각합니다.
 그때 교체가 조금만 빨랐다면. 그 선수가 다른 공간으로 움직였다면. 결과는 바뀌지 않았을까.
 되감독 구십은 월드컵의 결정적 순간을 다시 열어, 사용자를 그날의 감독석으로 보냅니다.
 아쉬웠던 경기를 고르고, 실제 경기와 같은 시점에서 다시 시작합니다.
@@ -19,24 +8,4 @@ NARRATION = """축구를 보다 보면, 누구나 한 번쯤 생각합니다.
 공이 골라인을 통과해야만 득점이 완성되고, 모든 결과에는 그 이유가 남습니다.
 경기가 끝나면 실제 경기, 기존 전술, 나의 선택, 코치 제안을 같은 조건에서 비교합니다.
 결과를 바꾸는 건 클릭이 아니라 판단입니다.
-그 경기를 되감고, 내가 감독이 된다. 되감독 구십."""
-
-
-async def generate() -> None:
-    output = Path(__file__).resolve().parent.parent / "public" / "audio" / "tts"
-    output.mkdir(parents=True, exist_ok=True)
-
-    target = output / "promo-narration.mp3"
-    speech = edge_tts.Communicate(
-        NARRATION,
-        VOICE,
-        rate=RATE,
-        pitch=PITCH,
-        volume=VOLUME,
-    )
-    await speech.save(target)
-    print(f"generated {target}")
-
-
-if __name__ == "__main__":
-    asyncio.run(generate())
+그 경기를 되감고, 내가 감독이 된다. 되감독 구십.
