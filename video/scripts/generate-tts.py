@@ -5,8 +5,8 @@ import edge_tts
 
 
 VOICE = "ko-KR-HyunsuMultilingualNeural"
-RATE = "-7%"
-PITCH = "-2Hz"
+RATE = "+6%"
+PITCH = "-1Hz"
 VOLUME = "+0%"
 
 LINES = (

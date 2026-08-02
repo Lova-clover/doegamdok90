@@ -337,20 +337,20 @@ const Outro = () => {
 };
 
 const narrationTracks = [
-  { from: 10, duration: 190, src: "audio/tts/01-intro.mp3" },
-  { from: 225, duration: 250, src: "audio/tts/02-archive.mp3" },
-  { from: 555, duration: 240, src: "audio/tts/03-tactics.mp3" },
-  { from: 1035, duration: 250, src: "audio/tts/04-cause.mp3" },
-  { from: 1395, duration: 290, src: "audio/tts/05-replay.mp3" },
-  { from: 1875, duration: 250, src: "audio/tts/06-report.mp3" },
-  { from: 2355, duration: 280, src: "audio/tts/07-outro.mp3" },
+  { from: 10, duration: 170, src: "audio/tts/01-intro.mp3" },
+  { from: 225, duration: 214, src: "audio/tts/02-archive.mp3" },
+  { from: 555, duration: 185, src: "audio/tts/03-tactics.mp3" },
+  { from: 1035, duration: 212, src: "audio/tts/04-cause.mp3" },
+  { from: 1395, duration: 231, src: "audio/tts/05-replay.mp3" },
+  { from: 1875, duration: 195, src: "audio/tts/06-report.mp3" },
+  { from: 2355, duration: 248, src: "audio/tts/07-outro.mp3" },
 ];
 
 const NarrationAudio = () => (
   <>
     {narrationTracks.map((track) => (
       <Sequence key={track.src} from={track.from} durationInFrames={track.duration}>
-        <Audio src={staticFile(track.src)} volume={1} />
+        <Audio src={staticFile(track.src)} volume={1.06} />
       </Sequence>
     ))}
   </>
@@ -358,14 +358,30 @@ const NarrationAudio = () => (
 
 const CrowdAudio = () => {
   const frame = useCurrentFrame();
-  const envelope = interpolate(frame, [0, 45, 2300, 2639], [0, 0.14, 0.14, 0], {
+  const baseEnvelope = interpolate(
+    frame,
+    [0, 90, 540, 1020, 1380, 1650, 1710, 1800, 1860, 2340, 2520, 2639],
+    [0, 0.08, 0.09, 0.08, 0.12, 0.17, 0.3, 0.18, 0.1, 0.14, 0.12, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+  const entrance = interpolate(frame, [0, 45], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const isNarrating = narrationTracks.some(
     ({ from, duration }) => frame >= from - 8 && frame <= from + duration + 8,
   );
-  return <Audio src={staticFile("audio/stadium-crowd.wav")} volume={envelope * (isNarrating ? 0.24 : 1)} loop />;
+  const narrationDuck = isNarrating ? 0.38 : 1;
+  return (
+    <Audio
+      src={staticFile("audio/stadium-crowd.wav")}
+      volume={baseEnvelope * entrance * narrationDuck}
+      loop
+    />
+  );
 };
 
 export const DemoVideo = () => (
